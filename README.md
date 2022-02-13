@@ -1,11 +1,13 @@
 # tycode
 
 #### 介绍
+Write once, Generate more，So stupid.
+
 一款简单而强大、灵活的代码生成器Cloud工具。
 
 与传统代码生成器有着很大区别，它可以生成任何编程语言的任意代码。如：生成一个模块完整的CRUD代码，从前端到后端，大幅提高开发人员的生产力。
 
-使用起来也非常简单，所以才有了这几句：Write once, Generate more，So stupid.
+使用起来也非常简单！点点按钮，几天的工作量，在弹指一挥间就完成了。
 
 技术选型：SpringBoot + JDBC + Vue + Vuetify。
 
