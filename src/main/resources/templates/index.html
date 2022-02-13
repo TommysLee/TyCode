@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Ty Code</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<th:block th:replace="common/common-scripts::commonScripts"></th:block>
+</head>
+<body onunload="">
+<v-app id="app" v-cloak class="dark">
+	<!-- 页眉 -->
+	<v-app-bar th:replace="~{common/app-bar :: appBar (prominent=true, remoteI18N=true)}"></v-app-bar>
+
+	<!-- 主体 -->
+	<!-- 基于Vuetify的表单验证，且提交时，禁止修改数据 -->
+	<v-form ref="form" v-model="valid" :readonly="posting" @submit.prevent="validData" method="post" action="generate">
+		<v-main>
+			<v-container fluid>
+				<v-row class="row-fill">
+					<!-- 参数设置区域 -->
+					<v-col cols="12" md="8">
+						<v-row>
+							<v-col cols="12">
+								<p class="field-name group-field-name" th:text="#{lang.datasource}">数据源</p>
+								<v-radio-group dark row hide-details mandatory v-model="configData.datasource" name="datasource">
+									<v-radio v-for="ds in datasources" color="success" :value="ds.id">
+										<template v-slot:label>
+											<span :class="ds.id == configData.datasource? 'green--text' : 'white--text'">{{ds.desc}}</span>
+										</template>
+									</v-radio>
+								</v-radio-group>
+							</v-col>
+						</v-row>
+						<v-row>
+							<v-col cols="12">
+								<p class="field-name group-field-name" th:text="#{lang.baseInfo}">基本信息</p>
+								<div style="margin-left: 10px;">
+									<v-row>
+										<v-col cols="12" md="10">
+											<v-text-field dark :clearable="!posting" hide-details required color="success" :rules="notEmptyRules" v-model.trim="configData.tabName" name="tabName">
+												<template v-slot:prepend>
+													<div class="field-name field-name-text" th:text="#{lang.dbTableName}">数据库表名</div>
+												</template>
+											</v-text-field>
+										</v-col>
+									</v-row>
+
+									<v-row>
+										<v-col cols="12" md="10">
+											<v-text-field dark :clearable="!posting" hide-details color="success" :rules="notEmptyRules" v-model.trim="configData.pkgName" name="pkgName">
+												<template v-slot:prepend>
+													<div class="field-name field-name-text" th:text="#{lang.entityPackageName}">实体类包名</div>
+												</template>
+											</v-text-field>
+										</v-col>
+									</v-row>
+
+									<v-row>
+										<v-col cols="12" md="10">
+											<v-text-field dark :clearable="!posting" hide-details color="success" :rules="notEmptyRules" v-model.trim="configData.author" name="author">
+												<template v-slot:prepend>
+													<div class="field-name field-name-text" th:text="#{lang.author}">作者</div>
+												</template>
+											</v-text-field>
+										</v-col>
+									</v-row>
+								</div>
+							</v-col>
+						</v-row>
+					</v-col>
+
+					<v-divider vertical dark></v-divider>
+
+					<!-- 模板组选择区域 -->
+					<v-col cols="12" md="4">
+						<p class="field-name group-field-name" th:text="#{lang.template}">模板</p>
+						<v-list dark :disabled="posting">
+							<v-list-item-group mandatory color="white" active-class="list-item-selected" class="template-group" v-model="configData.templateGroup">
+								<template v-for="(tg, index) in templateGroups">
+									<v-list-item :value="tg.id">
+										<v-list-item-content>
+											<v-list-item-title>{{tg.name}}</v-list-item-title>
+											<v-list-item-subtitle>
+												<div class="white--text">{{tg.desc}}</div>
+											</v-list-item-subtitle>
+										</v-list-item-content>
+									</v-list-item>
+									<v-divider dark v-if="index < templateGroups.length - 1"></v-divider>
+								</template>
+							</v-list-item-group>
+						</v-list>
+						<input type="hidden" name="templateGroup" v-model="configData.templateGroup"/>
+					</v-col>
+				</v-row>
+			</v-container>
+		</v-main>
+
+		<!-- Footer -->
+		<v-footer app dark style="justify-content: center; padding: 15px 0;">
+			<v-btn x-large color="grey darken-4" type="submit" :loading="posting" style="border: 2px solid #fff !important; padding: 0 60px">
+				{{$t("message.generate")}}
+				<template v-slot:loader>
+					<v-progress-circular indeterminate></v-progress-circular>
+					<span style="padding-left: 5px;">{{$t("message.genrating")}}</span>
+				</template>
+			</v-btn>
+		</v-footer>
+	</v-form>
+
+	<!-- Toast -->
+	<v-snackbar v-model="showToast" multiLine centered timeout="1500" content-class="toast-content" style="opacity: 0.9">
+		{{toastText}}
+	</v-snackbar>
+</v-app>
+
+<!-- 主程序JS -->
+<script type="text/javascript" src="js/app.js"></script>
+</body>
+</html>

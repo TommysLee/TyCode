@@ -1,0 +1,27 @@
+#服务器配置（仅在SpringBoot内有效，外部Tomcat等容器无效）
+server:
+  port: 80 #服务器端口
+  servlet:
+    encoding:
+      charset: UTF-8
+
+#Spring配置
+spring:
+  messages: #国际化配置
+    basename: i18n.language
+  thymeleaf: #视图配置
+    cache: false #开发时，关闭thymeleaf缓存
+  web:
+    locale: zh_CN #默认语言配置
+  jackson: #JSON配置
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    default-property-inclusion: NON_EMPTY
+  servlet:
+    multipart: #文件上传配置
+      max-file-size: 20MB
+
+#系统配置
+ty:
+  tabNamePrefix: "tbl_|t_" #数据库表名前缀（用于在生成源码时，自动剔除的部分）
+  pkgPrefix: "com.ty." #Java Package前缀

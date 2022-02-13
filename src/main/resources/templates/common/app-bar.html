@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <body>
+    <v-app-bar app dark flat th:prominent="${prominent}" class="header-divider" th:fragment="appBar">
+      <v-toolbar-title th:style="${prominent}? 'padding-bottom: 16px;' : null">
+        <a th:href="@{/}">
+          <img src="images/logo.png" class="logo"/>
+        </a>
+        <span class="app-name">Code</span>
+      </v-toolbar-title>
+
+      <!--/* 标题占位符 */-->
+      <div th:replace="${titleFrag} ?: ~{}"/>
+
+      <v-spacer></v-spacer>
+
+      <v-tooltip bottom>
+        <template v-slot:activator="{on, attrs}">
+          <v-btn icon v-bind="attrs" v-on="on" @click="clearCache">
+            <v-icon>mdi-flash</v-icon>
+          </v-btn>
+        </template>
+        <span v-text="$t('message.clearCache')"></span>
+      </v-tooltip>
+
+      <v-menu dark open-on-hover bottom offset-y>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn icon v-bind="attrs" v-on="on">
+            <v-icon>mdi-translate</v-icon>
+            <v-icon>mdi-chevron-down</v-icon>
+          </v-btn>
+        </template>
+        <v-list>
+          <v-subheader>
+            <span style="font-weight: bold">{{$t('message.translate')}}</span>
+          </v-subheader>
+          <v-list-item-group mandatory v-model="lang" th:@change="${remoteI18N}? 'switchLang' : null">
+            <v-list-item value="zh_CN">
+              <v-list-item-content>
+                <v-list-item-title>简体中文</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item value="en_US">
+              <v-list-item-content>
+                <v-list-item-title>English</v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-item-group>
+        </v-list>
+      </v-menu>
+      <v-btn icon @click="toggleFullScreen">
+        <v-icon>{{fullscreenIcon}}</v-icon>
+      </v-btn>
+    </v-app-bar>
+  </body>
+</html>

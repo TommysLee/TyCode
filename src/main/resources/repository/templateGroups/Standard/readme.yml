@@ -1,0 +1,35 @@
+name: "标准化模板"
+desc: "包含：页面、JS、Controller、业务逻辑层、数据访问层等组件模板。"
+fileDescList:
+  -
+    name: "entity.th"
+    desc: "实体类"
+    type: "java"
+  -
+    name: "dao.th"
+    desc: "DAO"
+    type: "java"
+  -
+    name: "mapper.th"
+    desc: "MyBatis SQL Mapper"
+    type: "xml"
+  -
+    name: "service.th"
+    desc: "业务逻辑Service"
+    type: "java"
+  -
+    name: "serviceimpl.th"
+    desc: "业务逻辑实现类"
+    type: "java"
+  -
+    name: "controller.th"
+    desc: "业务Controller"
+    type: "java"
+  -
+    name: "html.th"
+    desc: "Vue HTML"
+    type: "html"
+  -
+    name: "js.th"
+    desc: "JavaScript脚本"
+    type: "javascript"

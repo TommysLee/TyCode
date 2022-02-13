@@ -1,0 +1,91 @@
+package [[${utils.pkgPrefix}]]web.[[${base.moduleName}]].controller;
+
+import [[${base.pkgName ?: ''}]].[[${base.clazzName ?: ''}]];
+import [[${utils.pkgPrefix}]]api.[[${base.moduleName}]].service.[[${base.clazzName ?: ''}]]Service;
+import com.ty.cm.constant.Ty;
+import com.ty.cm.model.AjaxResult;
+import com.ty.web.base.controller.BaseController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+/**
+ * [[${base.tabComment ?: ''}]]Controller
+ *
+ * @Author [[${base.author ?: ''}]]
+ * @Date [[${utils.now()}]]
+ */
+@Controller
+@RequestMapping("/[[${base.moduleName}]]/[[${base.instanceName ?: ''}]]")
+public class [[${base.clazzName ?: ''}]]Controller extends BaseController {
+
+    @Autowired
+    private [[${base.clazzName ?: ''}]]Service [[${base.instanceName ?: ''}]]Service;
+
+    /**
+     * 跳转到[[${base.tabComment ?: ''}]]列表页面
+     */
+    @GetMapping("/view")
+    public String view() {
+        return "[[${base.moduleName}]]/[[${base.instanceName ?: ''}]]/[[${base.instanceName ?: ''}]]";
+    }
+
+    /**
+     * 分页查询[[${base.tabComment ?: ''}]]列表
+     */
+    @RequestMapping("/list")
+    @ResponseBody
+    public AjaxResult list([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]], @RequestParam(defaultValue = Ty.DEFAULT_PAGE) String page, @RequestParam(defaultValue = Ty.DEFAULT_PAGESIZE) String pageSize) throws Exception {
+        return AjaxResult.success([[${base.instanceName ?: ''}]]Service.query([[${base.instanceName ?: ''}]], page, pageSize));
+    }
+
+    /**
+     * 增加[[${base.tabComment ?: ''}]]
+     */
+    @PostMapping("/save")
+    @ResponseBody
+    public AjaxResult save([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]]) throws Exception {
+
+        [[${base.instanceName ?: ''}]].setCreateUser(getCurrentUserId());
+        int n = [[${base.instanceName ?: ''}]]Service.save([[${base.instanceName ?: ''}]]);
+        return AjaxResult.success(n);
+    }
+
+    /**
+     * 查询[[${base.tabComment ?: ''}]]明细
+     */
+    @GetMapping("/single/{[[${base.pkProperty ?: ''}]]}")
+    @ResponseBody
+    public AjaxResult single([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]]) throws Exception {
+
+        [[${base.instanceName ?: ''}]] = [[${base.instanceName ?: ''}]]Service.getById([[${base.instanceName ?: ''}]].get[[${#strings.capitalize(base.pkProperty)}]]());
+        return AjaxResult.success([[${base.instanceName ?: ''}]]);
+    }
+
+    /**
+     * 修改[[${base.tabComment ?: ''}]]
+     */
+    @PostMapping("/update")
+    @ResponseBody
+    public AjaxResult update([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]]) throws Exception {
+
+        [[${base.instanceName ?: ''}]].setUpdateUser(getCurrentUserId());
+        int n = [[${base.instanceName ?: ''}]]Service.update([[${base.instanceName ?: ''}]]);
+        return AjaxResult.success(n);
+    }
+
+    /**
+     * 删除[[${base.tabComment ?: ''}]]
+     */
+    @GetMapping("/del/{[[${base.pkProperty ?: ''}]]}")
+    @ResponseBody
+    public AjaxResult del([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]]) throws Exception {
+
+        int n = [[${base.instanceName ?: ''}]]Service.delete([[${base.instanceName ?: ''}]].get[[${#strings.capitalize(base.pkProperty)}]]());
+        return AjaxResult.success(n);
+    }
+}

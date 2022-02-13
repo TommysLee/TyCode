@@ -1,0 +1,127 @@
+// 初始化Vue
+let app = new Vue({
+  el: "#app",
+  data: {
+    menuName: "[[${base.tabComment ?: ''}]]管理",
+    // 查询条件
+    param: {
+      name: null
+    },
+    // 数据表格
+    datatable: {
+      headers: [
+        { text: '序号', value:'index', align:"center"},[#th:block th:each="item : ${mappings}" th:object="${item}" th:unless="${#strings.contains('remark, createUser, updateUser, updateTime',item.javaName) || item.isKey}"]
+        { text: '[[*{columnComment ?: ''}]]', value:'[[*{javaName ?: ''}]]'[#th:block th:if="*{'createTime' == javaName}"], align:"center", width:180[/th:block]},[/th:block]
+        { text: '操作', value:'operation', align:"center"}
+      ],
+      items: []
+    },
+    // 表单数据
+    formData: {[#th:block th:each="item,stat : ${mappings}" th:object="${item}" th:unless="${#strings.contains('createUser, createTime, updateUser, updateTime',item.javaName)}"]
+      [[*{javaName ?: ''}]]: null,[/th:block]
+    },
+    // 模态窗口
+    winDialog: false,
+    dialogTitle: null
+  },
+
+  /*
+   * 加载列表数据
+   */
+  created() {
+    this.doQuery();
+  },
+
+  methods: {
+    /*
+     * 执行条件查询
+     */
+    doQuery() {
+      if (!this.loading) {
+        this.loading = true;
+        this.scrollTop();
+
+        this.param.page = this.pagination.page;
+        doAjax(ctx + "[[${base.moduleName}]]/[[${base.instanceName ?: ''}]]/list", this.param, (data) => {
+          if (data.state) {
+            let pageData = data.data;
+            this.pagination.totalPages = pageData.pages; // 总页数
+            this.datatable.items = addIndexPropForArray(pageData.data, this.pagination); // 数据集合
+          } else {
+            this.toast(data.message, 'warning');
+          }
+        });
+      }
+    },
+
+    /*
+     * 重置查询表单
+     */
+    resetQueryForm() {
+      this.$refs.queryForm.reset();
+      this.doQuery();
+    },
+
+    /*
+     * 打开表单编辑画面
+     */
+    openFormDialog(title, id) {
+      this.formData.[[${base.pkProperty ?: ''}]] = id || null;
+      this.dialogTitle = title;
+      this.winDialog = true;
+
+      // 查询记录详情
+      if (id) {
+        this.posting = true;
+        doAjax(ctx + "[[${base.moduleName}]]/[[${base.instanceName ?: ''}]]/single/" + id, null, (data) => {
+          if (data.state) {
+            this.copyValue(this.formData, data.data);
+          } else {
+            this.toast(data.message, 'warning');
+          }
+        }, "GET");
+      }
+    },
+
+    /*
+     * 关闭表单编辑画面
+     */
+    closeFormDialog() {
+      this.winDialog = false;
+      this.resetForm('dataForm', 'observer');
+    },
+
+    /*
+     * 提交表单数据
+     */
+    doSubmit() {
+      this.posting = true;
+      let method = this.formData.[[${base.pkProperty ?: ''}]]? "update" : "save";
+      doAjax(ctx + "[[${base.moduleName}]]/[[${base.instanceName ?: ''}]]/" + method, this.formData, (data) => {
+        if (data.state) {
+          this.toast("操作成功");
+          this.closeFormDialog();
+          this.resetQueryForm();
+        } else {
+          this.toast(data.message, 'warning');
+        }
+      });
+    },
+
+    /*
+     * 删除数据
+     */
+    doDelete([[${base.pkProperty ?: ''}]]) {
+      this.posting = true;
+      doAjax(ctx + "[[${base.moduleName}]]/[[${base.instanceName ?: ''}]]/del/" + [[${base.pkProperty ?: ''}]], null, (data) => {
+        this.$refs[#th:block th:text="'['+${base.pkProperty ?: ''}+']'"/].isActive=false;
+        if (data.state) {
+          this.toast("删除成功");
+          this.doQuery();
+        } else {
+          this.toast(data.message, 'warning');
+        }
+      }, "GET");
+    }
+  }
+});

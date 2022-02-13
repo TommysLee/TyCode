@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ty Code</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <th:block th:replace="common/common-scripts::commonScripts"></th:block>
+
+    <style type="text/css">
+        .v-application--wrap {
+            min-height: auto;
+        }
+    </style>
+</head>
+<body onunload="">
+    <v-app id="app" v-cloak class="dark">
+        <!-- 页眉 -->
+        <v-app-bar th:replace="~{common/app-bar :: appBar (titleFrag=~{::#titleFrag})}">
+            <th:block id="titleFrag">
+                <v-spacer></v-spacer>
+                <v-subheader>
+                    <v-tooltip bottom>
+                        <template v-slot:activator="{on, attrs}">
+                            <v-btn id="copyBtn" text v-bind="attrs" v-on="on" @click="copySource">
+                                <th:block th:text="${clazzName ?: '无法获取名称'}"></th:block>
+                            </v-btn>
+                        </template>
+                        <span v-text="$t('message.clickCopySrc')"></span>
+                    </v-tooltip>
+                </v-subheader>
+            </th:block>
+        </v-app-bar>
+
+        <!-- 主体 -->
+        <v-main>
+            <v-container fluid>
+                <!-- 代码选项卡 -->
+                <v-tabs dark center-active color="success" style="padding: 0 10px;" grow show-arrows v-model="codeTabIndex">
+                    <v-tab th:each="result : ${resultList}" th:text="${result.showName}">源码</v-tab>
+                </v-tabs>
+            </v-container>
+        </v-main>
+
+        <!-- Toast -->
+        <v-snackbar v-model="showToast" multiLine centered timeout="1500" content-class="toast-content" style="opacity: 0.9">
+            {{toastText}}
+        </v-snackbar>
+    </v-app>
+
+<!-- 源代码区域 -->
+<div class="code-container">
+<div th:each="result : ${resultList}" class="code-area" data-ace-theme="ace/theme/cobalt" th:data-ace-mode="'ace/mode/' + ${result.type}">
+[[${result.sourceCode}]]
+</div>
+</div>
+
+    <!-- 代码高亮插件 -->
+    <script type="text/javascript" src="js/lib/ace/ace.js"></script>
+
+    <!-- 剪切板插件 -->
+    <script type="text/javascript" src="js/lib/clipboard.js"></script>
+
+    <!-- 主程序JS -->
+    <script type="text/javascript" src="js/result.js"></script>
+</body>
+</html>
