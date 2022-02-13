@@ -27,7 +27,7 @@ Write once, Generate more，So stupid.
 
 > 划重点：代码模板是基于Thyemleaf编写的，所以你**只要会一点点Thymeleaf基础就可以啦**！So Easy！！！
 
-项目中内置了一套标准模板，此模板完全适用于 **TyFast** 平台。
+项目中内置了一套标准模板，此模板完全适用于 **[TyFast](https://gitee.com/tommycloud/TyFast)** 平台。
 
 但每个人的项目架构搭建方式略有不同，大家可以根据标准模板改成符合自己的需求的样子。
 
