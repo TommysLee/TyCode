@@ -61,9 +61,7 @@
               >
                 <template v-slot:item.operation="{item}">
                   <a class="mr-2" @click="openFormDialog('修改[[${base.tabComment ?: ''}]]', item.[[${base.pkProperty ?: ''}]])" shiro:hasPermission="/[[${base.moduleName}]]/[[${base.instanceName ?: ''}]]/update">修改</a>
-                  <shiro:hasPermission name="/[[${base.moduleName}]]/[[${base.instanceName ?: ''}]]/del">
-                    <th:block th:replace="assets/include :: deleteBtn('item.[[${base.pkProperty ?: ''}]]', 'posting', 'doDelete(item.[[${base.pkProperty ?: ''}]])')"/>
-                  </shiro:hasPermission>
+                  <v-btn-confirm :data="item.[[${base.pkProperty ?: ''}]]" @confirm="doDelete" shiro:hasPermission="/[[${base.moduleName}]]/[[${base.instanceName ?: ''}]]/del"></v-btn-confirm>
                 </template>
               </v-data-table>
               <v-pagination class="pagebar mt-2" :disabled="loading" v-model="pagination.page" :length="pagination.totalPages" :total-visible="pagination.vp" @input="doQuery" v-show="pagination.totalPages > 0"/>
@@ -102,6 +100,9 @@
       </v-container>
     </v-main>
   </v-app>
+
+  <!-- 导入Vuetify扩展组件 -->
+  <th:block th:replace="assets/vuetify :: v-btn-confirm"/>
 
   <!-- 业务js -->
   <script type="text/javascript" th:src="@{/js/[[${base.moduleName}]]/[[${base.instanceName ?: ''}]]/[[${base.instanceName ?: ''}]].js}"></script>

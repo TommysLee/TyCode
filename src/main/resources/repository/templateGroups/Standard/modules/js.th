@@ -111,15 +111,14 @@ let app = new Vue({
     /*
      * 删除数据
      */
-    doDelete([[${base.pkProperty ?: ''}]]) {
-      this.posting = true;
+    doDelete([[${base.pkProperty ?: ''}]], confirmObj) {
       doAjax(ctx + "[[${base.moduleName}]]/[[${base.instanceName ?: ''}]]/del/" + [[${base.pkProperty ?: ''}]], null, (data) => {
-        this.$refs[#th:block th:text="'['+${base.pkProperty ?: ''}+']'"/].isActive=false;
         if (data.state) {
           this.toast("删除成功");
           this.doQuery();
         } else {
           this.toast(data.message, 'warning');
+          confirmObj.finish();
         }
       }, "GET");
     }
