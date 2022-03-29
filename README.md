@@ -15,7 +15,7 @@ Write once, Generate more，So stupid.
 
 系统支持热加载，即修改了数据源和模板后，不需要重启哦！
 
-该工具已在集团使用多年，本着普惠的精神，特将其调整后开源。
+该工具已在集团使用多年，本着普惠的精神，特将其优化后开源。
 
 #### 产品界面
 
@@ -23,15 +23,15 @@ Write once, Generate more，So stupid.
 
 ![](https://gitee.com/tommycloud/typora-drawing-bed/raw/master/ty-code/code-result-zh.png)
 
-#### 使用前提
+#### 使用前置条件
 
 > 划重点：代码模板是基于Thyemleaf编写的，所以你**只要会一点点Thymeleaf基础就可以啦**！So Easy！！！
 
 项目中内置了一套标准模板，此模板完全适用于 **[TyFast](https://gitee.com/tommycloud/TyFast)** 平台。
 
-但每个人的项目架构搭建方式略有不同，大家可以根据标准模板改成符合自己的需求的样子。
+因每个团队的项目架构搭建方式不尽相同，大家可以根据标准模板改成符合自己编码规范的样子。
 
-#### 如何编写模板
+#### 如何编写代码模板
 
 所有的模板和数据源都存放在项目的 **src / main / resources / repository** 目录中，如下图所示：
 
@@ -41,7 +41,7 @@ repository 各目录和文件的说明：
 
 - jdbc.yml：是数据源配置文件，支持配置多个数据源；
 - templateGroups：是存放模板组的目录，一个模板组即一个目录；
-- modules、readme.yml：每个模板组都必须包含这两个，系统是按照这个规则进行读取的；
+- modules、readme.yml：每个模板组都必须包含这两个部分，系统会按此规则进行读取；
 
 **模板中用到的动态数据，大家只需要关心如下两个类即可：**
 
@@ -62,4 +62,4 @@ repository 各目录和文件的说明：
 
 #### 最后
 
-欢迎大家留言，多交流学习，让码砖的事情成为过去式，让我们将精力专注于业务开发。
+欢迎大家踊跃留言，共同推进TyCode成长，让码砖成为过去式，让我们的精力专注于业务开发。
