@@ -73,13 +73,13 @@ let app = new Vue({
       // 查询记录详情
       if (id) {
         this.posting = true;
-        doAjax(ctx + "[[${base.moduleName}]]/[[${base.instanceName ?: ''}]]/single/" + id, null, (data) => {
+        doAjaxGet(ctx + "[[${base.moduleName}]]/[[${base.instanceName ?: ''}]]/single/" + id, null, (data) => {
           if (data.state) {
             this.copyValue(this.formData, data.data);
           } else {
             this.toast(data.message, 'warning');
           }
-        }, "GET");
+        });
       }
     },
 
@@ -112,7 +112,7 @@ let app = new Vue({
      * 删除数据
      */
     doDelete([[${base.pkProperty ?: ''}]], confirmObj) {
-      doAjax(ctx + "[[${base.moduleName}]]/[[${base.instanceName ?: ''}]]/del/" + [[${base.pkProperty ?: ''}]], null, (data) => {
+      doAjaxGet(ctx + "[[${base.moduleName}]]/[[${base.instanceName ?: ''}]]/del/" + [[${base.pkProperty ?: ''}]], null, (data) => {
         if (data.state) {
           this.toast("删除成功");
           this.doQuery();
@@ -120,7 +120,7 @@ let app = new Vue({
           this.toast(data.message, 'warning');
           confirmObj.finish();
         }
-      }, "GET");
+      });
     }
   }
 });

@@ -60,10 +60,8 @@ public class [[${base.clazzName ?: ''}]]Controller extends BaseController {
      */
     @GetMapping("/single/{[[${base.pkProperty ?: ''}]]}")
     @ResponseBody
-    public AjaxResult single([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]]) throws Exception {
-
-        [[${base.instanceName ?: ''}]] = [[${base.instanceName ?: ''}]]Service.getById([[${base.instanceName ?: ''}]].get[[${#strings.capitalize(base.pkProperty)}]]());
-        return AjaxResult.success([[${base.instanceName ?: ''}]]);
+    public AjaxResult single(@PathVariable String [[${base.pkProperty ?: ''}]]) throws Exception {
+        return AjaxResult.success([[${base.instanceName ?: ''}]]Service.getById([[${base.pkProperty ?: ''}]]));
     }
 
     /**
@@ -83,9 +81,9 @@ public class [[${base.clazzName ?: ''}]]Controller extends BaseController {
      */
     @GetMapping("/del/{[[${base.pkProperty ?: ''}]]}")
     @ResponseBody
-    public AjaxResult del([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]]) throws Exception {
+    public AjaxResult del(@PathVariable String [[${base.pkProperty ?: ''}]]) throws Exception {
 
-        int n = [[${base.instanceName ?: ''}]]Service.delete([[${base.instanceName ?: ''}]].get[[${#strings.capitalize(base.pkProperty)}]]());
+        int n = [[${base.instanceName ?: ''}]]Service.delete([[${base.pkProperty ?: ''}]]);
         return AjaxResult.success(n);
     }
 }
