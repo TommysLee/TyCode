@@ -84,10 +84,10 @@
                 <v-card-text>
                   <!-- 数据表单 -->[#th:block th:each="item : ${mappings}" th:object="${item}" th:unless="${#strings.contains('createUser, createTime, updateUser, updateTime',item.javaName) || item.isKey}"][#th:block th:if="*{'remark' == javaName}"]
                   <validation-provider v-slot="{ errors }" name="备注" rules="max:200">
-                    <v-textarea outlined dense clearable :error-messages="errors" v-model.trim="formData.remark" label="备注"></v-textarea>
+                    <v-textarea outlined dense clearable :error-messages="errors" v-model.trimx="formData.remark" label="备注"></v-textarea>
                   </validation-provider>[/th:block][#th:block th:if="*{'remark' != javaName}"]
                   <validation-provider v-slot="{ errors }" name="[[*{columnComment ?: ''}]]" rules="required|max:[[*{#strings.contains('Integer, Long, Double, Float', javaType)? 10 : 30}]]">
-                    <v-text-field outlined dense clearable type="[[*{#strings.contains('Integer, Long, Double, Float', javaType)? 'number' : 'text'}]]" :error-messages="errors" v-model.trim="formData.[[*{javaName}]]" label="[[*{columnComment ?: ''}]]"></v-text-field>
+                    <v-text-field outlined dense clearable type="[[*{#strings.contains('Integer, Long, Double, Float', javaType)? 'number' : 'text'}]]" :error-messages="errors" v-model.trimx="formData.[[*{javaName}]]" label="[[*{columnComment ?: ''}]]"></v-text-field>
                   </validation-provider>[/th:block][/th:block]
                 </v-card-text>
                 <v-card-actions class="justify-end">
