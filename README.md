@@ -19,9 +19,9 @@ Write once, Generate more，So stupid.
 
 #### 产品界面
 
-![](https://gitee.com/tommycloud/typora-drawing-bed/raw/master/ty-code/code-index-zh.png)
+![](https://gitee.com/tommycloud/TyStudy/raw/master/src/main/resources/assets/ty-code/code-index-zh.png)
 
-![](https://gitee.com/tommycloud/typora-drawing-bed/raw/master/ty-code/code-result-zh.png)
+![](https://gitee.com/tommycloud/TyStudy/raw/master/src/main/resources/assets/ty-code/code-result-zh.png)
 
 #### 使用前置条件
 
@@ -35,7 +35,7 @@ Write once, Generate more，So stupid.
 
 所有的模板和数据源都存放在项目的 **src / main / resources / repository** 目录中，如下图所示：
 
-![](https://gitee.com/tommycloud/typora-drawing-bed/raw/master/ty-code/repos.png)
+![](https://gitee.com/tommycloud/TyStudy/raw/master/src/main/resources/assets/ty-code/repos.png)
 
 repository 各目录和文件的说明：
 
@@ -50,7 +50,7 @@ repository 各目录和文件的说明：
 
 > 无论是数据源的修改，还是模板的修改，都不需要重启TyCode，因为TyCode**支持热加载**，只要在页面点一下清除缓存即可。
 
-![](https://gitee.com/tommycloud/typora-drawing-bed/raw/master/ty-code/clear.png)
+![](https://gitee.com/tommycloud/TyStudy/raw/master/src/main/resources/assets/ty-code/clear.png)
 
 #### 如何复制源码
 
@@ -58,7 +58,7 @@ repository 各目录和文件的说明：
 
 所以大家 做的更多的事情就是：Ctrl + C 和 Ctrl +V
 
-![](https://gitee.com/tommycloud/typora-drawing-bed/raw/master/ty-code/copy.png)
+![](https://gitee.com/tommycloud/TyStudy/raw/master/src/main/resources/assets/ty-code/copy.png)
 
 #### 最后
 
