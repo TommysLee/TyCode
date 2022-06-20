@@ -105,6 +105,6 @@
   <th:block th:replace="assets/vuetify :: v-btn-confirm"/>
 
   <!-- 业务js -->
-  <script type="text/javascript" th:src="@{/js/[[${base.moduleName}]]/[[${base.instanceName ?: ''}]]/[[${base.instanceName ?: ''}]].js}"></script>
+  <script type="text/javascript" th:src="@{/js/[[${base.moduleName}]]/[[${base.instanceName ?: ''}]]/[[${base.instanceName ?: ''}]].js?_t=#buildtime#}"></script>
 </body>
 </html>
