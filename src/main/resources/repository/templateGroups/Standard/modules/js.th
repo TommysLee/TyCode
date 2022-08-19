@@ -59,7 +59,7 @@ let app = new Vue({
      * 重置查询表单
      */
     resetQueryForm() {
-      this.$refs.queryForm.reset();
+      this.resetForm('queryForm');
       this.doQuery();
     },
 
@@ -89,7 +89,7 @@ let app = new Vue({
      */
     closeFormDialog() {
       this.winDialog = false;
-      this.resetForm('dataForm', 'observer');
+      this.resetForm();
     },
 
     /*
