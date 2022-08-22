@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @Author [[${base.author ?: ''}]]
  * @Date [[${utils.now()}]]
  */
-@Controller
+@RestController
 @RequestMapping("/[[${base.moduleName}]]/[[${base.instanceName ?: ''}]]")
 public class [[${base.clazzName ?: ''}]]Controller extends BaseController {
 
@@ -31,15 +31,14 @@ public class [[${base.clazzName ?: ''}]]Controller extends BaseController {
      * 跳转到[[${base.tabComment ?: ''}]]列表页面
      */
     @GetMapping("/view")
-    public String view() {
-        return "[[${base.moduleName}]]/[[${base.instanceName ?: ''}]]/[[${base.instanceName ?: ''}]]";
+    public ModelAndView view() {
+        return new ModelAndView("[[${base.moduleName}]]/[[${base.instanceName ?: ''}]]/[[${base.instanceName ?: ''}]]");
     }
 
     /**
      * 分页查询[[${base.tabComment ?: ''}]]列表
      */
     @RequestMapping("/list")
-    @ResponseBody
     public AjaxResult list([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]], @RequestParam(defaultValue = Ty.DEFAULT_PAGE) String page, @RequestParam(defaultValue = Ty.DEFAULT_PAGESIZE) String pageSize) throws Exception {
         return AjaxResult.success([[${base.instanceName ?: ''}]]Service.query([[${base.instanceName ?: ''}]], page, pageSize));
     }
@@ -48,7 +47,6 @@ public class [[${base.clazzName ?: ''}]]Controller extends BaseController {
      * 增加[[${base.tabComment ?: ''}]]
      */
     @PostMapping("/save")
-    @ResponseBody
     public AjaxResult save([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]]) throws Exception {
 
         [[${base.instanceName ?: ''}]].setCreateUser(getCurrentUserId());
@@ -60,7 +58,6 @@ public class [[${base.clazzName ?: ''}]]Controller extends BaseController {
      * 查询[[${base.tabComment ?: ''}]]明细
      */
     @GetMapping("/single/{[[${base.pkProperty ?: ''}]]}")
-    @ResponseBody
     public AjaxResult single(@PathVariable String [[${base.pkProperty ?: ''}]]) throws Exception {
         return AjaxResult.success([[${base.instanceName ?: ''}]]Service.getById([[${base.pkProperty ?: ''}]]));
     }
@@ -69,7 +66,6 @@ public class [[${base.clazzName ?: ''}]]Controller extends BaseController {
      * 修改[[${base.tabComment ?: ''}]]
      */
     @PostMapping("/update")
-    @ResponseBody
     public AjaxResult update([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]]) throws Exception {
 
         [[${base.instanceName ?: ''}]].setUpdateUser(getCurrentUserId());
@@ -81,7 +77,6 @@ public class [[${base.clazzName ?: ''}]]Controller extends BaseController {
      * 删除[[${base.tabComment ?: ''}]]
      */
     @GetMapping("/del/{[[${base.pkProperty ?: ''}]]}")
-    @ResponseBody
     public AjaxResult del(@PathVariable String [[${base.pkProperty ?: ''}]]) throws Exception {
 
         int n = [[${base.instanceName ?: ''}]]Service.delete([[${base.pkProperty ?: ''}]]);
