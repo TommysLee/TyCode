@@ -26,6 +26,10 @@ fileDescList:
     desc: "业务Controller"
     type: "java"
   -
+    name: "mapping.th"
+    desc: "视图映射配置"
+    type: "yaml"
+  -
     name: "html.th"
     desc: "Vue HTML"
     type: "html"

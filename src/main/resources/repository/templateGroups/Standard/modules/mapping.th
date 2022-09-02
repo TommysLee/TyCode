@@ -1,0 +1,3 @@
+"[/[[${base.moduleName}]]/[[${base.instanceName ?: ''}]]/view]": "[[${base.moduleName}]]/[[${base.instanceName ?: ''}]]/[[${base.instanceName ?: ''}]]"
+
+#请将此配置，追加到 application-view-mapping.yml

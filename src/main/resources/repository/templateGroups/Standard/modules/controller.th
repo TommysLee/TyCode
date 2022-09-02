@@ -27,14 +27,6 @@ public class [[${base.clazzName ?: ''}]]Controller extends BaseController {
     private [[${base.clazzName ?: ''}]]Service [[${base.instanceName ?: ''}]]Service;
 
     /**
-     * 跳转到[[${base.tabComment ?: ''}]]列表页面
-     */
-    @GetMapping("/view")
-    public ModelAndView view() {
-        return new ModelAndView("[[${base.moduleName}]]/[[${base.instanceName ?: ''}]]/[[${base.instanceName ?: ''}]]");
-    }
-
-    /**
      * 分页查询[[${base.tabComment ?: ''}]]列表
      */
     @RequestMapping("/list")
