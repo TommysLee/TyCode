@@ -32,6 +32,7 @@ public class SpringContextHolder implements ApplicationContextAware {
         SpringContextHolder.applicationContext = applicationContext;
         SpringContextHolder.defaultListableBeanFactory = (DefaultListableBeanFactory) applicationContext
                 .getAutowireCapableBeanFactory();
+        SpringContextHolder.localeResolver = applicationContext.getBean(LocaleResolver.class);
     }
 
     /**
@@ -51,7 +52,6 @@ public class SpringContextHolder implements ApplicationContextAware {
      * @return String
      */
     public static String getMessage(String code) {
-        localeResolver = null != localeResolver? localeResolver : getBean(LocaleResolver.class);
         return applicationContext.getMessage(code, null, localeResolver.resolveLocale(getRequest()));
     }
 
