@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Ty Code</title>
+    <title>[[#{tycode}]]</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <th:block th:replace="common/common-scripts::commonScripts"></th:block>
 
@@ -25,7 +25,7 @@
                                 <th:block th:text="${clazzName ?: '无法获取名称'}"></th:block>
                             </v-btn>
                         </template>
-                        <span v-text="$t('message.clickCopySrc')"></span>
+                        <span v-text="$t('点击复制源码')"></span>
                     </v-tooltip>
                 </v-subheader>
             </th:block>
@@ -36,7 +36,7 @@
             <v-container fluid>
                 <!-- 代码选项卡 -->
                 <v-tabs dark center-active color="success" style="padding: 0 10px;" grow show-arrows v-model="codeTabIndex">
-                    <v-tab th:each="result : ${resultList}" th:text="${result.showName}">源码</v-tab>
+                    <v-tab th:each="result : ${resultList}" th:text="${#messages.msg(result.showName)}">源码</v-tab>
                 </v-tabs>
             </v-container>
         </v-main>

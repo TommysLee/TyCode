@@ -1,6 +1,7 @@
 <!-- VUE初始化 -->
 let app = new Vue({
     el: "#app",
+    mixins,
     data: {
         codeTabIndex: null,
         activeNodeCls: "ace-actived",
@@ -54,10 +55,10 @@ let app = new Vue({
             });
             clipboard.on('success', function(e) {
                 e.clearSelection();
-                _this.toastText = _this.$t("message.copySuccess");
+                _this.toastText = _this.$t("拷贝成功");
             });
             clipboard.on('error', function(e) {
-                _this.toastText = _this.$t("message.copyError");
+                _this.toastText = _this.$t("拷贝失败");
             });
         }
     },
@@ -78,8 +79,11 @@ let app = new Vue({
             console.log(this.editors[this.codeTabIndex].getValue());
             this.showToast = true;
             if (!this.isSupported) {
-                this.toastText = this.$t('message.notSupportIE')
+                this.toastText = this.$t('IE浏览器不支持复制功能')
             }
+        },
+        switchLang() {
+            window.location.reload();
         }
     }
 });

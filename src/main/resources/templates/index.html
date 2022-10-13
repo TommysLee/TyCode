@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
-	<title>Ty Code</title>
+	<title>[[#{tycode}]]</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<th:block th:replace="common/common-scripts::commonScripts"></th:block>
 </head>
@@ -21,7 +21,7 @@
 					<v-col cols="12" md="8">
 						<v-row>
 							<v-col cols="12">
-								<p class="field-name group-field-name" th:text="#{lang.datasource}">数据源</p>
+								<p class="field-name group-field-name" v-t="'数据源'"></p>
 								<v-radio-group dark row hide-details mandatory v-model="configData.datasource" name="datasource">
 									<v-radio v-for="ds in datasources" color="success" :value="ds.id">
 										<template v-slot:label>
@@ -33,13 +33,13 @@
 						</v-row>
 						<v-row>
 							<v-col cols="12">
-								<p class="field-name group-field-name" th:text="#{lang.baseInfo}">基本信息</p>
+								<p class="field-name group-field-name" v-t="'基础信息'"></p>
 								<div style="margin-left: 10px;">
 									<v-row>
 										<v-col cols="12" md="10">
 											<v-text-field dark :clearable="!posting" hide-details required color="success" :rules="notEmptyRules" v-model.trim="configData.tabName" name="tabName">
 												<template v-slot:prepend>
-													<div class="field-name field-name-text" th:text="#{lang.dbTableName}">数据库表名</div>
+													<div class="field-name field-name-text" :class="lang != 'zh_CN'? 'field-name-text-large':''" v-t="'数据库表名'"></div>
 												</template>
 											</v-text-field>
 										</v-col>
@@ -49,7 +49,7 @@
 										<v-col cols="12" md="10">
 											<v-text-field dark :clearable="!posting" hide-details color="success" :rules="notEmptyRules" v-model.trim="configData.pkgName" name="pkgName">
 												<template v-slot:prepend>
-													<div class="field-name field-name-text" th:text="#{lang.entityPackageName}">实体类包名</div>
+													<div class="field-name field-name-text" :class="lang != 'zh_CN'? 'field-name-text-large':''" v-t="'实体类包名'"></div>
 												</template>
 											</v-text-field>
 										</v-col>
@@ -59,7 +59,7 @@
 										<v-col cols="12" md="10">
 											<v-text-field dark :clearable="!posting" hide-details color="success" :rules="notEmptyRules" v-model.trim="configData.author" name="author">
 												<template v-slot:prepend>
-													<div class="field-name field-name-text" th:text="#{lang.author}">作者</div>
+													<div class="field-name field-name-text" :class="lang != 'zh_CN'? 'field-name-text-large':''" v-t="'作者'"></div>
 												</template>
 											</v-text-field>
 										</v-col>
@@ -73,7 +73,7 @@
 
 					<!-- 模板组选择区域 -->
 					<v-col cols="12" md="4">
-						<p class="field-name group-field-name" th:text="#{lang.template}">模板</p>
+						<p class="field-name group-field-name">{{$t('模板')}}</p>
 						<v-list dark :disabled="posting">
 							<v-list-item-group mandatory color="white" active-class="list-item-selected" class="template-group" v-model="configData.templateGroup">
 								<template v-for="(tg, index) in templateGroups">
@@ -98,10 +98,10 @@
 		<!-- Footer -->
 		<v-footer app dark style="justify-content: center; padding: 15px 0;">
 			<v-btn x-large color="grey darken-4" type="submit" :loading="posting" style="border: 2px solid #fff !important; padding: 0 60px">
-				{{$t("message.generate")}}
+				{{$t("一键生成")}}
 				<template v-slot:loader>
 					<v-progress-circular indeterminate></v-progress-circular>
-					<span style="padding-left: 5px;">{{$t("message.genrating")}}</span>
+					<span style="padding-left: 5px;">{{$t("生成中...")}}</span>
 				</template>
 			</v-btn>
 		</v-footer>

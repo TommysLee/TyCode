@@ -9,6 +9,7 @@ server:
 spring:
   messages: #国际化配置
     basename: i18n.language
+    use-code-as-default-message: true
   thymeleaf: #视图配置
     cache: false #开发时，关闭thymeleaf缓存
   web:

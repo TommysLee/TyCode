@@ -20,10 +20,10 @@
             <v-icon>mdi-flash</v-icon>
           </v-btn>
         </template>
-        <span v-text="$t('message.clearCache')"></span>
+        <span v-text="$t('清除缓存')"></span>
       </v-tooltip>
 
-      <v-menu dark open-on-hover bottom offset-y>
+      <v-menu dark open-on-hover bottom offset-y :close-delay="200">
         <template v-slot:activator="{ on, attrs }">
           <v-btn icon v-bind="attrs" v-on="on">
             <v-icon>mdi-translate</v-icon>
@@ -31,18 +31,10 @@
           </v-btn>
         </template>
         <v-list>
-          <v-subheader>
-            <span style="font-weight: bold">{{$t('message.translate')}}</span>
-          </v-subheader>
-          <v-list-item-group mandatory v-model="lang" th:@change="${remoteI18N}? 'switchLang' : null">
-            <v-list-item value="zh_CN">
+          <v-list-item-group mandatory v-model="lang" @change="switchLang">
+            <v-list-item v-for="locale in locales" :value="locale.lang">
               <v-list-item-content>
-                <v-list-item-title>简体中文</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item value="en_US">
-              <v-list-item-content>
-                <v-list-item-title>English</v-list-item-title>
+                <v-list-item-title>{{locale.text}}</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </v-list-item-group>

@@ -59,6 +59,10 @@ footer.theme--dark {
     text-align: right;
 }
 
+.field-name-text-large {
+    width: 190px;
+}
+
 .list-item-selected {
     background-color: #4CAF50;
 }

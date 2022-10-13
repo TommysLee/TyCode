@@ -24,7 +24,6 @@ public class IndexController {
         Map<String, Object> dataMap = Maps.newHashMap();
         dataMap.put("msg", "感谢选择 Thymeleaf 作为视图渲染器!!");
         model.addAttribute("data", dataMap);
-
         return "index";
     }
 }

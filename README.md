@@ -17,6 +17,8 @@ Write once, Generate more，So stupid.
 
 该工具在集团内使用多年，为了自身不断优化、发扬开源贡献精神，于2022年完全开源。
 
+支持i18N国际化。
+
 #### 产品界面
 
 ![](https://gitee.com/tommycloud/TyStudy/raw/master/src/main/resources/assets/ty-code/code-index-zh.png)

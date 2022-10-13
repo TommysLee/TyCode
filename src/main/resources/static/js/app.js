@@ -1,6 +1,7 @@
 <!-- VUE初始化 -->
 let app = new Vue({
     el: "#app",
+    mixins,
     data: {
         datasources: [], // 后台获取的数据源
         templateGroups: [], // 后台获取的模板组数据
@@ -32,9 +33,6 @@ let app = new Vue({
                 console.log(JSON.stringify(this.configData));
                 this.$refs.form.$el.submit();
             }
-        },
-        switchLang() {
-            window.location.reload(true);
         }
     },
     created() { // 在Created阶段，从后台加载数据
