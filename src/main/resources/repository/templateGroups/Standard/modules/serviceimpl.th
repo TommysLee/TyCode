@@ -94,7 +94,7 @@ public class [[${base.clazzName ?: ''}]]ServiceImpl implements [[${base.clazzNam
      * @return int 返回受影响的行数
      * @throws Exception
      */
-    @Transactional(readOnly = false)
+    @Transactional
     @Override
     public int save([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]]) throws Exception {
 
@@ -114,7 +114,7 @@ public class [[${base.clazzName ?: ''}]]ServiceImpl implements [[${base.clazzNam
      * @return int 返回受影响的行数
      * @throws Exception
      */
-    @Transactional(readOnly = false)
+    @Transactional
     @Override
     public int saveBatch(List<[[${base.clazzName ?: ''}]]> list) throws Exception {
 
@@ -172,7 +172,7 @@ public class [[${base.clazzName ?: ''}]]ServiceImpl implements [[${base.clazzNam
      * @return int 返回受影响的行数
      * @throws Exception
      */
-    @Transactional(readOnly = false)
+    @Transactional
     @Override
     public int update([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]]) throws Exception {
 
@@ -190,7 +190,7 @@ public class [[${base.clazzName ?: ''}]]ServiceImpl implements [[${base.clazzNam
      * @return int 返回受影响的行数
      * @throws Exception
      */
-    @Transactional(readOnly = false)
+    @Transactional
     @Override
     public int delete([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]]) throws Exception {
 
@@ -208,7 +208,7 @@ public class [[${base.clazzName ?: ''}]]ServiceImpl implements [[${base.clazzNam
      * @return int 返回受影响的行数
      * @throws Exception
      */
-    @Transactional(readOnly = false)
+    @Transactional
     @Override
     public int delete(String id) throws Exception {
 
@@ -228,7 +228,7 @@ public class [[${base.clazzName ?: ''}]]ServiceImpl implements [[${base.clazzNam
      * @return int 返回受影响的行数
      * @throws Exception
      */
-    @Transactional(readOnly = false)
+    @Transactional
     @Override
     public int deleteBatch(List<String> ids) throws Exception {
 
