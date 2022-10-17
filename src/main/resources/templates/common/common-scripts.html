@@ -4,23 +4,23 @@
 
   <!-- 共同引用的JS与CSS -->
   <th:block th:fragment="commonScripts">
-    <link rel="stylesheet" href="css/materialdesignicons.css">
-    <link rel="stylesheet" href="css/vuetify.min.css">
-    <link rel="stylesheet" href="css/scrollbar.css">
-    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" th:href="@{/css/materialdesignicons.css}">
+    <link rel="stylesheet" th:href="@{/css/vuetify.min.css}">
+    <link rel="stylesheet" th:href="@{/css/scrollbar.css}">
+    <link rel="stylesheet" th:href="@{/css/app.css}">
 
-    <script type="text/javascript" src="js/lib/vue.min.js"></script>
-    <script type="text/javascript" src="js/lib/vuetify.min.js"></script>
-    <script type="text/javascript" src="js/lib/vue-cookies.js"></script>
-    <script type="text/javascript" src="js/lib/screenfull.js"></script>
-    <script type="text/javascript" src="js/lib/i18n/vue-i18n.min.js"></script>
-    <script type="text/javascript" src="js/lib/axios.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/lib/vue.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/lib/vuetify.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/lib/vue-cookies.js}"></script>
+    <script type="text/javascript" th:src="@{/js/lib/screenfull.js}"></script>
+    <script type="text/javascript" th:src="@{/js/lib/i18n/vue-i18n.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/lib/axios.min.js}"></script>
 
-    <script type="text/javascript" src="js/common.js"></script>
+    <script type="text/javascript" th:src="@{/js/common.js}"></script>
 
     <!-- i18N国际化资源 -->
-    <script type="text/javascript" src="js/assets/lang/en_US.js"></script>
-    <script type="text/javascript" src="js/assets/lang/ja_JP.js"></script>
+    <script type="text/javascript" th:src="@{/js/assets/lang/en_US.js}"></script>
+    <script type="text/javascript" th:src="@{/js/assets/lang/ja_JP.js}"></script>
   </th:block>
 
   </body>
