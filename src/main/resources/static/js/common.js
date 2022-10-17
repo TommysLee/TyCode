@@ -32,7 +32,7 @@ const mixins = [{
         }
     },
     created() {
-        this.lang = $cookies.get("lang");
+        this.lang = $cookies.get("lang") || this.lang;
         this.fullScreenListener();
     },
     methods: {
