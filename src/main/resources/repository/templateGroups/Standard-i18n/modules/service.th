@@ -1,0 +1,14 @@
+package [[${utils.pkgPrefix}]]api.[[${base.moduleName}]].service;
+
+import com.ty.api.base.service.BaseService;
+import [[${base.pkgName ?: ''}]].[[${base.clazzName ?: ''}]];
+
+/**
+ * [[${base.tabComment ?: ''}]]业务逻辑接口
+ *
+ * @Author [[${base.author ?: ''}]]
+ * @Date [[${utils.now()}]]
+ */
+public interface [[${base.clazzName ?: ''}]]Service extends BaseService<[[${base.clazzName ?: ''}]]> {
+
+}

@@ -1,0 +1,91 @@
+package [[${utils.pkgPrefix}]]logic.[[${base.moduleName}]].dao;
+
+import com.github.pagehelper.Page;
+import [[${base.pkgName ?: ''}]].[[${base.clazzName ?: ''}]];
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.session.RowBounds;
+
+import java.util.List;
+
+/**
+ * [[${base.tabComment ?: ''}]]数据访问层
+ *
+ * @Author [[${base.author ?: ''}]]
+ * @Date [[${utils.now()}]]
+ */
+@Mapper
+public interface [[${base.clazzName ?: ''}]]Dao {
+
+    /**
+     * 根据条件查询[[${base.tabComment ?: ''}]]记录数
+     *
+     * @param [[${base.instanceName ?: ''}]] [[${base.tabComment ?: ''}]]
+     * @return int
+     */
+    public int find[[${base.clazzName ?: ''}]]Count([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]]);
+
+    /**
+     * 根据条件查询所有[[${base.tabComment ?: ''}]]数据
+     *
+     * @param [[${base.instanceName ?: ''}]] [[${base.tabComment ?: ''}]]
+     * @return List<[[${base.clazzName ?: ''}]]>
+     */
+    public List<[[${base.clazzName ?: ''}]]> find[[${base.clazzName ?: ''}]]([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]]);
+
+    /**
+     * 根据条件分页查询[[${base.tabComment ?: ''}]]数据
+     *
+     * @param rowBounds 分页参数
+     * @param [[${base.instanceName ?: ''}]] [[${base.tabComment ?: ''}]]
+     * @return Page<[[${base.clazzName ?: ''}]]>
+     */
+    public Page<[[${base.clazzName ?: ''}]]> find[[${base.clazzName ?: ''}]](RowBounds rowBounds, [[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]]);
+
+    /**
+     * 根据ID查询[[${base.tabComment ?: ''}]]数据
+     *
+     * @param [[${base.pkProperty ?: ''}]] [[${base.tabComment ?: ''}]]ID
+     * @return [[${base.clazzName ?: ''}]]
+     */
+    public [[${base.clazzName ?: ''}]] find[[${base.clazzName ?: ''}]]ById(String [[${base.pkProperty ?: ''}]]);
+
+    /**
+     * 保存[[${base.tabComment ?: ''}]]数据
+     *
+     * @param [[${base.instanceName ?: ''}]] [[${base.tabComment ?: ''}]]
+     * @return int 返回受影响的行数
+     */
+    public int save[[${base.clazzName ?: ''}]]([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]]);
+
+    /**
+     * 批量保存[[${base.tabComment ?: ''}]]数据
+     *
+     * @param list [[${base.tabComment ?: ''}]]集合
+     * @return int 返回受影响的行数
+     */
+    public int saveMulti[[${base.clazzName ?: ''}]](List<[[${base.clazzName ?: ''}]]> list);
+
+    /**
+     * 更新[[${base.tabComment ?: ''}]]数据
+     *
+     * @param [[${base.instanceName ?: ''}]] [[${base.tabComment ?: ''}]]
+     * @return int 返回受影响的行数
+     */
+    public int update[[${base.clazzName ?: ''}]]([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]]);
+
+    /**
+     * 删除[[${base.tabComment ?: ''}]]数据
+     *
+     * @param [[${base.instanceName ?: ''}]] [[${base.tabComment ?: ''}]]
+     * @return int 返回受影响的行数
+     */
+    public int del[[${base.clazzName ?: ''}]]([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]]);
+
+    /**
+     * 批量删除[[${base.tabComment ?: ''}]]数据
+     *
+     * @param ids ID集合
+     * @return int 返回受影响的行数
+     */
+    public int delMulti[[${base.clazzName ?: ''}]](List<String> ids);
+}

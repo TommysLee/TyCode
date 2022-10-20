@@ -1,0 +1,241 @@
+package [[${utils.pkgPrefix}]]logic.[[${base.moduleName}]].service.impl;
+
+import com.github.pagehelper.Page;
+import [[${base.pkgName ?: ''}]].[[${base.clazzName ?: ''}]];
+import [[${utils.pkgPrefix}]]api.[[${base.moduleName}]].service.[[${base.clazzName ?: ''}]]Service;
+import com.ty.cm.utils.uusn.UUSNUtil;
+import [[${utils.pkgPrefix}]]logic.[[${base.moduleName}]].dao.[[${base.clazzName ?: ''}]]Dao;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.ibatis.session.RowBounds;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static com.ty.cm.constant.Ty.DATA;
+import static com.ty.cm.constant.Ty.PAGES;
+import static com.ty.cm.constant.Ty.TOTAL;
+
+/**
+ * [[${base.tabComment ?: ''}]]业务逻辑实现
+ *
+ * @Author [[${base.author ?: ''}]]
+ * @Date [[${utils.now()}]]
+ */
+@Service
+@Transactional(readOnly = true)
+public class [[${base.clazzName ?: ''}]]ServiceImpl implements [[${base.clazzName ?: ''}]]Service {
+
+    @Autowired
+    private [[${base.clazzName ?: ''}]]Dao [[${base.instanceName ?: ''}]]Dao;
+
+    /**
+     * 根据条件查询所有[[${base.tabComment ?: ''}]]数据
+     *
+     * @param [[${base.instanceName ?: ''}]] [[${base.tabComment ?: ''}]]
+     * @return List<[[${base.clazzName ?: ''}]]>
+     * @throws Exception
+     */
+    @Override
+    public List<[[${base.clazzName ?: ''}]]> getAll([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]]) throws Exception {
+
+        if (null == [[${base.instanceName ?: ''}]]) {
+            [[${base.instanceName ?: ''}]] = new [[${base.clazzName ?: ''}]]();
+        }
+        return [[${base.instanceName ?: ''}]]Dao.find[[${base.clazzName ?: ''}]]([[${base.instanceName ?: ''}]]);
+    }
+
+    /**
+     * 根据条件分页查询[[${base.tabComment ?: ''}]]数据
+     *
+     * @param [[${base.instanceName ?: ''}]] [[${base.tabComment ?: ''}]]
+     * @param pageNum 页码
+     * @param pageSize 每页显示条数
+     * @return Map<String, Object> 返回满足条件的数据集合与记录数
+     * @throws Exception
+     */
+    @Override
+    public Map<String, Object> query([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]], String pageNum, String pageSize) throws Exception {
+
+        Page<[[${base.clazzName ?: ''}]]> page = (Page<[[${base.clazzName ?: ''}]]>) this.queryData([[${base.instanceName ?: ''}]], pageNum, pageSize);
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put(TOTAL, page.getTotal());
+        resultMap.put(PAGES, page.getPages());
+        resultMap.put(DATA, page);
+        return resultMap;
+    }
+
+    /**
+     * 根据条件分页查询[[${base.tabComment ?: ''}]]数据
+     *
+     * @param [[${base.instanceName ?: ''}]] [[${base.tabComment ?: ''}]]
+     * @param pageNum 页码
+     * @param pageSize 每页显示条数
+     * @return List<[[${base.clazzName ?: ''}]]> 返回满足条件的数据集合
+     * @throws Exception
+     */
+    @Override
+    public List<[[${base.clazzName ?: ''}]]> queryData([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]], String pageNum, String pageSize) throws Exception {
+
+        Page<[[${base.clazzName ?: ''}]]> page = new Page<>();
+        if (StringUtils.isNumeric(pageNum) && StringUtils.isNumeric(pageSize)) {
+            page = [[${base.instanceName ?: ''}]]Dao.find[[${base.clazzName ?: ''}]](new RowBounds(Integer.parseInt(pageNum), Integer.parseInt(pageSize)), [[${base.instanceName ?: ''}]]);
+        }
+        return page;
+    }
+
+    /**
+     * 保存[[${base.tabComment ?: ''}]]数据
+     *
+     * @param [[${base.instanceName ?: ''}]] [[${base.tabComment ?: ''}]]
+     * @return int 返回受影响的行数
+     * @throws Exception
+     */
+    @Transactional
+    @Override
+    public int save([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]]) throws Exception {
+
+        int n = 0;
+        if (null != [[${base.instanceName ?: ''}]]) {
+            [[${base.instanceName ?: ''}]].set[[${#strings.capitalize(base.pkProperty)}]](UUSNUtil.nextUUSN());
+            [[${base.instanceName ?: ''}]].setUpdateUser([[${base.instanceName ?: ''}]].getCreateUser());
+            n = [[${base.instanceName ?: ''}]]Dao.save[[${base.clazzName ?: ''}]]([[${base.instanceName ?: ''}]]);
+        }
+        return n;
+    }
+
+    /**
+     * 批量保存[[${base.tabComment ?: ''}]]数据
+     *
+     * @param list [[${base.tabComment ?: ''}]]数据列表
+     * @return int 返回受影响的行数
+     * @throws Exception
+     */
+    @Transactional
+    @Override
+    public int saveBatch(List<[[${base.clazzName ?: ''}]]> list) throws Exception {
+
+        int n = 0;
+        if (null != list && list.size() > 0) {
+            for ([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]] : list) {
+                [[${base.instanceName ?: ''}]].set[[${#strings.capitalize(base.pkProperty)}]](UUSNUtil.nextUUSN());
+                [[${base.instanceName ?: ''}]].setUpdateUser([[${base.instanceName ?: ''}]].getCreateUser());
+            }
+            n = [[${base.instanceName ?: ''}]]Dao.saveMulti[[${base.clazzName ?: ''}]](list);
+        }
+        return n;
+    }
+
+    /**
+     * 根据条件查询单条[[${base.tabComment ?: ''}]]数据
+     *
+     * @param [[${base.instanceName ?: ''}]] [[${base.tabComment ?: ''}]]
+     * @return [[${base.clazzName ?: ''}]]
+     * @throws Exception
+     */
+    @Override
+    public [[${base.clazzName ?: ''}]] getOne([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]]) throws Exception {
+
+        if ([[${base.instanceName ?: ''}]] != null) {
+            List<[[${base.clazzName ?: ''}]]> [[${base.instanceName ?: ''}]]List = [[${base.instanceName ?: ''}]]Dao.find[[${base.clazzName ?: ''}]]([[${base.instanceName ?: ''}]]);
+            if ([[${base.instanceName ?: ''}]]List.size() > 0) {
+                return [[${base.instanceName ?: ''}]]List.get(0);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 根据ID查询[[${base.tabComment ?: ''}]]数据
+     *
+     * @param id ID
+     * @return [[${base.clazzName ?: ''}]]
+     * @throws Exception
+     */
+    @Override
+    public [[${base.clazzName ?: ''}]] getById(String id) throws Exception {
+
+        [[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]] = null;
+        if (StringUtils.isNotBlank(id)) {
+            [[${base.instanceName ?: ''}]] = [[${base.instanceName ?: ''}]]Dao.find[[${base.clazzName ?: ''}]]ById(id);
+        }
+        return [[${base.instanceName ?: ''}]];
+    }
+
+    /**
+     * 更新[[${base.tabComment ?: ''}]]数据
+     *
+     * @param [[${base.instanceName ?: ''}]] [[${base.tabComment ?: ''}]]
+     * @return int 返回受影响的行数
+     * @throws Exception
+     */
+    @Transactional
+    @Override
+    public int update([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]]) throws Exception {
+
+        int n = 0;
+        if (null != [[${base.instanceName ?: ''}]]) {
+            n = [[${base.instanceName ?: ''}]]Dao.update[[${base.clazzName ?: ''}]]([[${base.instanceName ?: ''}]]);
+        }
+        return n;
+    }
+
+    /**
+     * 删除[[${base.tabComment ?: ''}]]数据
+     *
+     * @param [[${base.instanceName ?: ''}]] [[${base.tabComment ?: ''}]]
+     * @return int 返回受影响的行数
+     * @throws Exception
+     */
+    @Transactional
+    @Override
+    public int delete([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]]) throws Exception {
+
+        int n = 0;
+        if (null != [[${base.instanceName ?: ''}]] && StringUtils.isNotBlank([[${base.instanceName ?: ''}]].get[[${#strings.capitalize(base.pkProperty)}]]())) {
+            n = [[${base.instanceName ?: ''}]]Dao.del[[${base.clazzName ?: ''}]]([[${base.instanceName ?: ''}]]);
+        }
+        return n;
+    }
+
+    /**
+     * 根据ID删除[[${base.tabComment ?: ''}]]数据
+     *
+     * @param id ID
+     * @return int 返回受影响的行数
+     * @throws Exception
+     */
+    @Transactional
+    @Override
+    public int delete(String id) throws Exception {
+
+        int n = 0;
+        if (StringUtils.isNotBlank(id)) {
+            [[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]] = new [[${base.clazzName ?: ''}]]();
+            [[${base.instanceName ?: ''}]].set[[${#strings.capitalize(base.pkProperty)}]](id);
+            n = this.delete([[${base.instanceName ?: ''}]]);
+        }
+        return n;
+    }
+
+    /**
+     * 批量删除[[${base.tabComment ?: ''}]]数据
+     *
+     * @param ids ID集合
+     * @return int 返回受影响的行数
+     * @throws Exception
+     */
+    @Transactional
+    @Override
+    public int deleteBatch(List<String> ids) throws Exception {
+
+        int n = 0;
+        if (null != ids && ids.size() > 0) {
+            n = [[${base.instanceName ?: ''}]]Dao.delMulti[[${base.clazzName ?: ''}]](ids);
+        }
+        return n;
+    }
+}

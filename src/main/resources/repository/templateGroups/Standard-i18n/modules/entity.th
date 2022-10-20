@@ -1,0 +1,23 @@
+package [[${base.pkgName ?: ''}]];
+
+import com.ty.api.model.BaseBO;
+import lombok.Data;
+[#th:block th:each="item : ${base.packageSet}"]
+import [[${item}]];
+[/th:block]
+/**
+ * [[${base.tabComment ?: ''}]]实体类
+ *
+ * @Author [[${base.author ?: ''}]]
+ * @Date [[${utils.now()}]]
+ */
+@Data
+public class [[${base.clazzName ?: ''}]] extends BaseBO {
+
+    private static final long serialVersionUID = [[${uusn}]]L;
+    [#th:block th:each="item : ${mappings}" th:object="${item}" th:if="!${#strings.contains('createUser, createTime, updateUser, updateTime, remark',item.javaName)}"]
+    /** [[*{columnComment}]][#th:block th:if="*{isKey}"] (主键)[/th:block] **/
+    private [[*{javaType}]] [[*{javaName}]];
+
+    [/th:block]
+}

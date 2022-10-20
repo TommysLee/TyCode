@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="[[${utils.pkgPrefix}]]logic.[[${base.moduleName}]].dao.[[${base.clazzName ?: ''}]]Dao">
+
+    <!-- 关系映射 -->
+    <resultMap id="[[${base.clazzName ?: ''}]]Map" type="[[${base.clazzName ?: ''}]]">[#th:block th:each="item : ${mappings}" th:object="${item}"]
+        <result property="[[*{javaName}]]" column="[[*{columnName}]]" />[/th:block]
+    </resultMap>
+
+    <!-- 查询条件 -->
+    <sql id="condition_[[${base.instanceName ?: ''}]]">
+        <where>[#th:block th:each="item : ${mappings}" th:object="${item}" th:unless="${#strings.contains('createUser, createTime, updateUser, updateTime, remark',item.javaName)}"]
+            <if test="[[*{javaName}]] != null[#th:block th:if="*{'String' == javaType}"] and [[*{javaName}]] != ''[/th:block]">
+                and t.[[*{columnName}]]=#{[[*{javaName}]]}
+            </if>[/th:block]
+        </where>
+    </sql>
+
+    <!-- 查询记录数 -->
+    <select id="find[[${base.clazzName ?: ''}]]Count" parameterType="[[${base.clazzName ?: ''}]]" resultType="java.lang.Integer">
+        SELECT count(*) FROM [[${base.tabName ?: ''}]] t
+        <include refid="condition_[[${base.instanceName ?: ''}]]" />
+    </select>
+
+    <!-- 查询结果集 -->
+    <select id="find[[${base.clazzName ?: ''}]]" parameterType="[[${base.clazzName ?: ''}]]" resultMap="[[${base.clazzName ?: ''}]]Map">
+        SELECT[#th:block th:each="item,stat : ${mappings}" th:object="${item}"]
+            t.[[*{columnName}]][#th:block th:if="!${stat.last}"],[/th:block][/th:block]
+        FROM
+            [[${base.tabName ?: ''}]] t
+        <include refid="condition_[[${base.instanceName ?: ''}]]" />
+        ORDER BY t.[[${base.pkColumn ?: ''}]] DESC
+    </select>
+
+    <!-- 根据ID查询记录 -->
+    <select id="find[[${base.clazzName ?: ''}]]ById" parameterType="java.lang.String" resultMap="[[${base.clazzName ?: ''}]]Map">
+        SELECT[#th:block th:each="item,stat : ${mappings}" th:object="${item}"]
+            t.[[*{columnName}]][#th:block th:if="!${stat.last}"],[/th:block][/th:block]
+        FROM
+            [[${base.tabName ?: ''}]] t
+        WHERE t.[[${base.pkColumn ?: ''}]] = #{[[${base.pkProperty ?: ''}]]}
+    </select>
+
+    <!-- 保存 -->
+    <insert id="save[[${base.clazzName ?: ''}]]" parameterType="[[${base.clazzName ?: ''}]]">
+        INSERT INTO [[${base.tabName ?: ''}]]
+        (
+        <trim suffix="" suffixOverrides=",">[#th:block th:each="item : ${mappings}" th:object="${item}"]
+            [#th:block th:if="*{forceValue != null}"][[*{columnName}]],[/th:block][#th:block th:if="*{forceValue == null}"]<if test="[[*{javaName}]] != null">[[*{columnName}]],</if>[/th:block][/th:block]
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffix="" suffixOverrides=",">[#th:block th:each="item : ${mappings}" th:object="${item}"]
+            [#th:block th:if="*{forceValue != null}"][[*{forceValue}]],[/th:block][#th:block th:if="*{forceValue == null}"]<if test="[[*{javaName}]] != null">#{[[*{javaName}]]},</if>[/th:block][/th:block]
+        </trim>
+        )
+    </insert>
+
+    <!-- 批量保存 -->
+    <insert id="saveMulti[[${base.clazzName ?: ''}]]" parameterType="java.util.List">
+        INSERT INTO [[${base.tabName ?: ''}]]([#th:block th:each="item,stat : ${mappings}" th:object="${item}"][[*{columnName}]][#th:block th:if="!${stat.last}"], [/th:block][/th:block])
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            ([#th:block th:each="item,stat : ${mappings}" th:object="${item}"][#th:block th:if="*{forceValue == null}"]#{item.[[*{javaName}]]}[/th:block][#th:block th:unless="*{forceValue == null}"][[*{forceValue}]][/th:block][#th:block th:if="!${stat.last}"], [/th:block][/th:block])
+        </foreach>
+    </insert>
+
+    <!-- 修改 -->
+    <update id="update[[${base.clazzName ?: ''}]]" parameterType="[[${base.clazzName ?: ''}]]">
+        UPDATE [[${base.tabName ?: ''}]]
+        <set>[#th:block th:each="item : ${mappings}" th:object="${item}" th:unless="${#strings.contains('createUser, createTime, updateTime',item.javaName)}"]
+            <if test="[[*{javaName}]] != null">[[*{columnName}]]=#{[[*{javaName}]]},</if>[/th:block]
+            update_time=now()
+        </set>
+        WHERE [[${base.pkColumn ?: ''}]] = #{[[${base.pkProperty ?: ''}]]}
+    </update>
+
+    <!-- 删除 -->
+    <delete id="del[[${base.clazzName ?: ''}]]" parameterType="[[${base.clazzName ?: ''}]]">
+        DELETE FROM [[${base.tabName ?: ''}]] WHERE [[${base.pkColumn ?: ''}]] = #{[[${base.pkProperty ?: ''}]]}
+    </delete>
+
+    <!-- 批量删除 -->
+    <delete id="delMulti[[${base.clazzName ?: ''}]]" parameterType="java.util.List">
+        DELETE FROM [[${base.tabName ?: ''}]] WHERE [[${base.pkColumn ?: ''}]] IN
+        <foreach collection="list" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
