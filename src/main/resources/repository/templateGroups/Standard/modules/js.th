@@ -116,7 +116,7 @@ let app = new Vue({
     doDelete([[${base.pkProperty ?: ''}]]) {
       doAjaxGet(ctx + "[[${base.moduleName}]]/[[${base.instanceName ?: ''}]]/del/" + [[${base.pkProperty ?: ''}]], null, (result) => {
         if (result.state) {
-          this.toast("删除成功");
+          this.toast("操作成功");
           this.doQuery();
         } else {
           this.toast(result.message, 'warning');
