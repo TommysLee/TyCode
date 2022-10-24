@@ -42,7 +42,7 @@ let app = new Vue({
         this.loading = true;
         this.scrollTop();
 
-        this.pagination.page = typeof(page) == 'number'? page : 1;
+        this.pagination.page = typeof(page) === 'number'? page : 1;
         this.param.page = this.pagination.page;
         doAjax(ctx + "[[${base.moduleName}]]/[[${base.instanceName ?: ''}]]/list", this.param, (result) => {
           if (result.state) {
