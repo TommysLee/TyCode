@@ -44,13 +44,13 @@ let app = new Vue({
 
         this.pagination.page = typeof(page) == 'number'? page : 1;
         this.param.page = this.pagination.page;
-        doAjax(ctx + "[[${base.moduleName}]]/[[${base.instanceName ?: ''}]]/list", this.param, (data) => {
-          if (data.state) {
-            let pageData = data.data;
+        doAjax(ctx + "[[${base.moduleName}]]/[[${base.instanceName ?: ''}]]/list", this.param, (result) => {
+          if (result.state) {
+            let pageData = result.data;
             this.pagination.totalPages = pageData.pages; // 总页数
             this.datatable.items = addIndexPropForArray(pageData.data, this.pagination); // 数据集合
           } else {
-            this.toast(data.message, 'warning');
+            this.toast(result.message, 'warning');
           }
         });
       }
@@ -75,11 +75,11 @@ let app = new Vue({
       // 查询记录详情
       if (id) {
         this.posting = true;
-        doAjaxGet(ctx + "[[${base.moduleName}]]/[[${base.instanceName ?: ''}]]/single/" + id, null, (data) => {
-          if (data.state) {
-            this.copyValue(this.formData, data.data);
+        doAjaxGet(ctx + "[[${base.moduleName}]]/[[${base.instanceName ?: ''}]]/single/" + id, null, (result) => {
+          if (result.state) {
+            this.copyValue(this.formData, result.data);
           } else {
-            this.toast(data.message, 'warning');
+            this.toast(result.message, 'warning');
           }
         });
       }
@@ -99,13 +99,13 @@ let app = new Vue({
     doSubmit() {
       this.posting = true;
       let method = this.formData.[[${base.pkProperty ?: ''}]]? "update" : "save";
-      doAjax(ctx + "[[${base.moduleName}]]/[[${base.instanceName ?: ''}]]/" + method, this.formData, (data) => {
-        if (data.state) {
+      doAjax(ctx + "[[${base.moduleName}]]/[[${base.instanceName ?: ''}]]/" + method, this.formData, (result) => {
+        if (result.state) {
           this.toast(this.$t("操作成功"));
           this.closeFormDialog();
           this.resetQueryForm();
         } else {
-          this.toast(data.message, 'warning');
+          this.toast(result.message, 'warning');
         }
       });
     },
@@ -114,12 +114,12 @@ let app = new Vue({
      * 删除数据
      */
     doDelete([[${base.pkProperty ?: ''}]]) {
-      doAjaxGet(ctx + "[[${base.moduleName}]]/[[${base.instanceName ?: ''}]]/del/" + [[${base.pkProperty ?: ''}]], null, (data) => {
-        if (data.state) {
+      doAjaxGet(ctx + "[[${base.moduleName}]]/[[${base.instanceName ?: ''}]]/del/" + [[${base.pkProperty ?: ''}]], null, (result) => {
+        if (result.state) {
           this.toast(this.$t("成功删除"));
           this.doQuery();
         } else {
-          this.toast(data.message, 'warning');
+          this.toast(result.message, 'warning');
         }
       });
     }
