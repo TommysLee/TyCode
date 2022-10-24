@@ -22,7 +22,7 @@ public interface [[${base.clazzName ?: ''}]]Dao {
      * @param [[${base.instanceName ?: ''}]] [[${base.tabComment ?: ''}]]
      * @return int
      */
-    public int find[[${base.clazzName ?: ''}]]Count([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]]);
+    int find[[${base.clazzName ?: ''}]]Count([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]]);
 
     /**
      * 根据条件查询所有[[${base.tabComment ?: ''}]]数据
@@ -30,7 +30,7 @@ public interface [[${base.clazzName ?: ''}]]Dao {
      * @param [[${base.instanceName ?: ''}]] [[${base.tabComment ?: ''}]]
      * @return List<[[${base.clazzName ?: ''}]]>
      */
-    public List<[[${base.clazzName ?: ''}]]> find[[${base.clazzName ?: ''}]]([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]]);
+    List<[[${base.clazzName ?: ''}]]> find[[${base.clazzName ?: ''}]]([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]]);
 
     /**
      * 根据条件分页查询[[${base.tabComment ?: ''}]]数据
@@ -39,7 +39,7 @@ public interface [[${base.clazzName ?: ''}]]Dao {
      * @param [[${base.instanceName ?: ''}]] [[${base.tabComment ?: ''}]]
      * @return Page<[[${base.clazzName ?: ''}]]>
      */
-    public Page<[[${base.clazzName ?: ''}]]> find[[${base.clazzName ?: ''}]](RowBounds rowBounds, [[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]]);
+    Page<[[${base.clazzName ?: ''}]]> find[[${base.clazzName ?: ''}]](RowBounds rowBounds, [[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]]);
 
     /**
      * 根据ID查询[[${base.tabComment ?: ''}]]数据
@@ -47,7 +47,7 @@ public interface [[${base.clazzName ?: ''}]]Dao {
      * @param [[${base.pkProperty ?: ''}]] [[${base.tabComment ?: ''}]]ID
      * @return [[${base.clazzName ?: ''}]]
      */
-    public [[${base.clazzName ?: ''}]] find[[${base.clazzName ?: ''}]]ById(String [[${base.pkProperty ?: ''}]]);
+    [[${base.clazzName ?: ''}]] find[[${base.clazzName ?: ''}]]ById(String [[${base.pkProperty ?: ''}]]);
 
     /**
      * 保存[[${base.tabComment ?: ''}]]数据
@@ -55,7 +55,7 @@ public interface [[${base.clazzName ?: ''}]]Dao {
      * @param [[${base.instanceName ?: ''}]] [[${base.tabComment ?: ''}]]
      * @return int 返回受影响的行数
      */
-    public int save[[${base.clazzName ?: ''}]]([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]]);
+    int save[[${base.clazzName ?: ''}]]([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]]);
 
     /**
      * 批量保存[[${base.tabComment ?: ''}]]数据
@@ -63,7 +63,7 @@ public interface [[${base.clazzName ?: ''}]]Dao {
      * @param list [[${base.tabComment ?: ''}]]集合
      * @return int 返回受影响的行数
      */
-    public int saveMulti[[${base.clazzName ?: ''}]](List<[[${base.clazzName ?: ''}]]> list);
+    int saveMulti[[${base.clazzName ?: ''}]](List<[[${base.clazzName ?: ''}]]> list);
 
     /**
      * 更新[[${base.tabComment ?: ''}]]数据
@@ -71,7 +71,7 @@ public interface [[${base.clazzName ?: ''}]]Dao {
      * @param [[${base.instanceName ?: ''}]] [[${base.tabComment ?: ''}]]
      * @return int 返回受影响的行数
      */
-    public int update[[${base.clazzName ?: ''}]]([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]]);
+    int update[[${base.clazzName ?: ''}]]([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]]);
 
     /**
      * 删除[[${base.tabComment ?: ''}]]数据
@@ -79,7 +79,7 @@ public interface [[${base.clazzName ?: ''}]]Dao {
      * @param [[${base.instanceName ?: ''}]] [[${base.tabComment ?: ''}]]
      * @return int 返回受影响的行数
      */
-    public int del[[${base.clazzName ?: ''}]]([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]]);
+    int del[[${base.clazzName ?: ''}]]([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]]);
 
     /**
      * 批量删除[[${base.tabComment ?: ''}]]数据
@@ -87,5 +87,5 @@ public interface [[${base.clazzName ?: ''}]]Dao {
      * @param ids ID集合
      * @return int 返回受影响的行数
      */
-    public int delMulti[[${base.clazzName ?: ''}]](List<String> ids);
+    int delMulti[[${base.clazzName ?: ''}]](List<String> ids);
 }

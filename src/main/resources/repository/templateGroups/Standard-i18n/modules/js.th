@@ -3,7 +3,7 @@ let app = new Vue({
   el: "#app",
   mixins,
   data: {
-    menuName: "[[${base.tabComment ?: ''}]]管理",
+    menuName: "[[${base.tabComment ?: ''}]]",
     // 查询条件
     param: {
       name: null
