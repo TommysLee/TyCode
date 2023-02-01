@@ -65,3 +65,6 @@ repository 各目录和文件的说明：
 #### 最后
 
 欢迎大家踊跃留言，共同推进TyCode成长，让码砖成为过去式，让我们的精力专注于业务开发。
+
+### 附：中国站点
+https://gitee.com/tommycloud/tycode
