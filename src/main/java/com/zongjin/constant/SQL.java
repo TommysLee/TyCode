@@ -19,6 +19,11 @@ public interface SQL {
      String MYSQL_COLUMN = "select TABLE_NAME, COLUMN_KEY, COLUMN_NAME, COLUMN_COMMENT, DATA_TYPE, NUMERIC_PRECISION, NUMERIC_SCALE, COLUMN_DEFAULT, COLUMN_TYPE from information_schema.`COLUMNS` where TABLE_SCHEMA='{0}' and TABLE_NAME='{1}'";
 
     /**
+     * MySQL 表外键字段sql
+     */
+    String MYSQL_COLUMN_FKey = "SELECT kcu.COLUMN_NAME FROM information_schema.TABLE_CONSTRAINTS AS tc INNER JOIN information_schema.KEY_COLUMN_USAGE AS kcu ON tc.CONSTRAINT_NAME = kcu.CONSTRAINT_NAME AND tc.TABLE_SCHEMA = kcu.TABLE_SCHEMA WHERE tc.CONSTRAINT_TYPE = 'FOREIGN KEY' AND tc.TABLE_SCHEMA='{0}' and tc.TABLE_NAME='{1}'";
+
+    /**
      * Oracle 表定义sql
      */
      String ORACLE_TABLE = "select TABLE_NAME, COMMENTS from user_tab_comments where TABLE_NAME=upper('{1}')";

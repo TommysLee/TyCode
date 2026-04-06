@@ -5,6 +5,7 @@ import [[${base.pkgName ?: ''}]].[[${base.clazzName ?: ''}]];
 import [[${utils.pkgPrefix}]]api.[[${base.moduleName}]].service.[[${base.clazzName ?: ''}]]Service;
 import com.ty.cm.utils.uusn.UUSNUtil;
 import [[${utils.pkgPrefix}]]logic.[[${base.moduleName}]].dao.[[${base.clazzName ?: ''}]]Dao;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,26 +28,11 @@ import static com.ty.cm.constant.Ty.TOTAL;
  */
 @Service
 @Transactional(readOnly = true)
+@Slf4j
 public class [[${base.clazzName ?: ''}]]ServiceImpl implements [[${base.clazzName ?: ''}]]Service {
 
     @Autowired
     private [[${base.clazzName ?: ''}]]Dao [[${base.instanceName ?: ''}]]Dao;
-
-    /**
-     * 根据条件获取[[${base.tabComment ?: ''}]]的总记录数
-     *
-     * @param [[${base.instanceName ?: ''}]] [[${base.tabComment ?: ''}]]
-     * @return int
-     * @throws Exception
-     */
-    @Override
-    public int getCount([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]]) throws Exception {
-
-        if (null == [[${base.instanceName ?: ''}]]) {
-            [[${base.instanceName ?: ''}]] = new [[${base.clazzName ?: ''}]]();
-        }
-        return [[${base.instanceName ?: ''}]]Dao.find[[${base.clazzName ?: ''}]]Count([[${base.instanceName ?: ''}]]);
-    }
 
     /**
      * 根据条件查询所有[[${base.tabComment ?: ''}]]数据
@@ -57,7 +43,6 @@ public class [[${base.clazzName ?: ''}]]ServiceImpl implements [[${base.clazzNam
      */
     @Override
     public List<[[${base.clazzName ?: ''}]]> getAll([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]]) throws Exception {
-
         if (null == [[${base.instanceName ?: ''}]]) {
             [[${base.instanceName ?: ''}]] = new [[${base.clazzName ?: ''}]]();
         }
@@ -75,7 +60,6 @@ public class [[${base.clazzName ?: ''}]]ServiceImpl implements [[${base.clazzNam
      */
     @Override
     public Map<String, Object> query([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]], String pageNum, String pageSize) throws Exception {
-
         Page<[[${base.clazzName ?: ''}]]> page = (Page<[[${base.clazzName ?: ''}]]>) this.queryData([[${base.instanceName ?: ''}]], pageNum, pageSize);
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put(TOTAL, page.getTotal());
@@ -95,7 +79,6 @@ public class [[${base.clazzName ?: ''}]]ServiceImpl implements [[${base.clazzNam
      */
     @Override
     public List<[[${base.clazzName ?: ''}]]> queryData([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]], String pageNum, String pageSize) throws Exception {
-
         Page<[[${base.clazzName ?: ''}]]> page = new Page<>();
         if (StringUtils.isNumeric(pageNum) && StringUtils.isNumeric(pageSize)) {
             page = [[${base.instanceName ?: ''}]]Dao.find[[${base.clazzName ?: ''}]](new RowBounds(Integer.parseInt(pageNum), Integer.parseInt(pageSize)), [[${base.instanceName ?: ''}]]);
@@ -113,7 +96,6 @@ public class [[${base.clazzName ?: ''}]]ServiceImpl implements [[${base.clazzNam
     @Transactional
     @Override
     public int save([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]]) throws Exception {
-
         int n = 0;
         if (null != [[${base.instanceName ?: ''}]]) {
             [[${base.instanceName ?: ''}]].set[[${#strings.capitalize(base.pkProperty)}]](UUSNUtil.nextUUSN());
@@ -133,9 +115,8 @@ public class [[${base.clazzName ?: ''}]]ServiceImpl implements [[${base.clazzNam
     @Transactional
     @Override
     public int saveBatch(List<[[${base.clazzName ?: ''}]]> list) throws Exception {
-
         int n = 0;
-        if (null != list && list.size() > 0) {
+        if (null != list && !list.isEmpty()) {
             for ([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]] : list) {
                 [[${base.instanceName ?: ''}]].set[[${#strings.capitalize(base.pkProperty)}]](UUSNUtil.nextUUSN());
                 [[${base.instanceName ?: ''}]].setUpdateUser([[${base.instanceName ?: ''}]].getCreateUser());
@@ -154,10 +135,9 @@ public class [[${base.clazzName ?: ''}]]ServiceImpl implements [[${base.clazzNam
      */
     @Override
     public [[${base.clazzName ?: ''}]] getOne([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]]) throws Exception {
-
         if ([[${base.instanceName ?: ''}]] != null) {
             List<[[${base.clazzName ?: ''}]]> [[${base.instanceName ?: ''}]]List = [[${base.instanceName ?: ''}]]Dao.find[[${base.clazzName ?: ''}]]([[${base.instanceName ?: ''}]]);
-            if ([[${base.instanceName ?: ''}]]List.size() > 0) {
+            if (![[${base.instanceName ?: ''}]]List.isEmpty()) {
                 return [[${base.instanceName ?: ''}]]List.get(0);
             }
         }
@@ -173,7 +153,6 @@ public class [[${base.clazzName ?: ''}]]ServiceImpl implements [[${base.clazzNam
      */
     @Override
     public [[${base.clazzName ?: ''}]] getById(String id) throws Exception {
-
         [[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]] = null;
         if (StringUtils.isNotBlank(id)) {
             [[${base.instanceName ?: ''}]] = [[${base.instanceName ?: ''}]]Dao.find[[${base.clazzName ?: ''}]]ById(id);
@@ -191,7 +170,6 @@ public class [[${base.clazzName ?: ''}]]ServiceImpl implements [[${base.clazzNam
     @Transactional
     @Override
     public int update([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]]) throws Exception {
-
         int n = 0;
         if (null != [[${base.instanceName ?: ''}]]) {
             n = [[${base.instanceName ?: ''}]]Dao.update[[${base.clazzName ?: ''}]]([[${base.instanceName ?: ''}]]);
@@ -209,7 +187,6 @@ public class [[${base.clazzName ?: ''}]]ServiceImpl implements [[${base.clazzNam
     @Transactional
     @Override
     public int delete([[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]]) throws Exception {
-
         int n = 0;
         if (null != [[${base.instanceName ?: ''}]] && StringUtils.isNotBlank([[${base.instanceName ?: ''}]].get[[${#strings.capitalize(base.pkProperty)}]]())) {
             n = [[${base.instanceName ?: ''}]]Dao.del[[${base.clazzName ?: ''}]]([[${base.instanceName ?: ''}]]);
@@ -227,7 +204,6 @@ public class [[${base.clazzName ?: ''}]]ServiceImpl implements [[${base.clazzNam
     @Transactional
     @Override
     public int delete(String id) throws Exception {
-
         int n = 0;
         if (StringUtils.isNotBlank(id)) {
             [[${base.clazzName ?: ''}]] [[${base.instanceName ?: ''}]] = new [[${base.clazzName ?: ''}]]();
@@ -247,9 +223,8 @@ public class [[${base.clazzName ?: ''}]]ServiceImpl implements [[${base.clazzNam
     @Transactional
     @Override
     public int deleteBatch(List<String> ids) throws Exception {
-
         int n = 0;
-        if (null != ids && ids.size() > 0) {
+        if (null != ids && !ids.isEmpty()) {
             n = [[${base.instanceName ?: ''}]]Dao.delMulti[[${base.clazzName ?: ''}]](ids);
         }
         return n;

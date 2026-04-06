@@ -1,4 +1,4 @@
-<!-- VUE初始化 -->
+// VUE初始化
 let app = new Vue({
     el: "#app",
     mixins,
@@ -36,13 +36,12 @@ let app = new Vue({
         }
     },
     created() { // 在Created阶段，从后台加载数据
-        let _this = this;
         doAjax("datasources", null, (response) => {
-            _this.datasources = response.data;
+            this.datasources = response.data;
         });
 
         doAjax("templategroups", null, (response) => {
-            _this.templateGroups = response.data;
+            this.templateGroups = response.data;
         });
     }
 });

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -41,7 +42,7 @@ public class GenerateController {
      * 代码生成
      */
     @PostMapping("/generate")
-    public String generate(Requirement requirement, Model model) throws Exception {
+    public String generate(@ModelAttribute Requirement requirement, Model model) throws Exception {
 
         log.info("代码生成中... " + requirement);
 

@@ -1,0 +1,3 @@
+"[/[[${base.moduleName}]]/[[${base.pageName ?: ''}]]/view]": "[[${base.moduleName}]]/[[${base.pageName ?: ''}]]"
+
+#请将此配置，追加到 application-view-mapping.yml

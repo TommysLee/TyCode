@@ -1,6 +1,23 @@
 # tycode
 
+#### 重要提示
+
+> **TyCode** 现已支持 Spring Native，即可通过 GraalVM Native-Image 编译为本地原生二进制应用，无需JVM。
+
+- **正常打包**
+
+```sh
+mvn clean package
+```
+
+- **Native原生应用打包**
+
+```sh
+mvn clean -Pnative native:compile
+```
+
 #### 介绍
+
 Write once, Generate more，So stupid.
 
 一款简单而强大、灵活的代码生成器Cloud工具。
@@ -21,15 +38,17 @@ Write once, Generate more，So stupid.
 
 #### 产品界面
 
-![](https://gitee.com/tommycloud/TyStudy/raw/master/src/main/resources/assets/ty-code/code-index-zh.png)
+![](https://github.com/TommysLee/images-bed/blob/main/ty-code/code-index-zh.png?raw=true)
 
-![](https://gitee.com/tommycloud/TyStudy/raw/master/src/main/resources/assets/ty-code/code-result-zh.png)
+![](https://github.com/TommysLee/images-bed/blob/main/ty-code/code-result-zh-1.png?raw=true)
+
+![](https://github.com/TommysLee/images-bed/blob/main/ty-code/code-result-zh-2.png?raw=true)
 
 #### 使用前置条件
 
 > 划重点：代码模板是基于Thyemleaf编写的，所以你**只要会一点点Thymeleaf基础就可以啦**！So Easy！！！
 
-项目中内置了一套标准模板，此模板完全适用于 **[TyFast](https://gitee.com/tommycloud/TyFast)** 平台。
+项目中内置了一套标准模板，此模板完全适用于 **[TyFast](https://github.com/TommysLee/TyFast)** 平台。
 
 因每个团队的项目架构搭建方式不尽相同，大家可以根据标准模板改成符合自己编码规范的样子。
 
@@ -37,7 +56,7 @@ Write once, Generate more，So stupid.
 
 所有的模板和数据源都存放在项目的 **src / main / resources / repository** 目录中，如下图所示：
 
-![](https://gitee.com/tommycloud/TyStudy/raw/master/src/main/resources/assets/ty-code/repos.png)
+![](https://github.com/TommysLee/images-bed/blob/main/ty-code/repos.png?raw=true)
 
 repository 各目录和文件的说明：
 
@@ -52,7 +71,7 @@ repository 各目录和文件的说明：
 
 > 无论是数据源的修改，还是模板的修改，都不需要重启TyCode，因为TyCode**支持热加载**，只要在页面点一下清除缓存即可。
 
-![](https://gitee.com/tommycloud/TyStudy/raw/master/src/main/resources/assets/ty-code/clear.png)
+![](https://github.com/TommysLee/images-bed/blob/main/ty-code/clear.png?raw=true)
 
 #### 如何复制源码
 
@@ -60,11 +79,8 @@ repository 各目录和文件的说明：
 
 所以大家 做的更多的事情就是：Ctrl + C 和 Ctrl +V
 
-![](https://gitee.com/tommycloud/TyStudy/raw/master/src/main/resources/assets/ty-code/copy.png)
+![](https://github.com/TommysLee/images-bed/blob/main/ty-code/copy.png?raw=true)
 
 #### 最后
 
 欢迎大家踊跃留言，共同推进TyCode成长，让码砖成为过去式，让我们的精力专注于业务开发。
-
-### 附：中国站点
-https://gitee.com/tommycloud/tycode

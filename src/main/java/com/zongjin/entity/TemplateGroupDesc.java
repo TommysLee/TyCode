@@ -23,9 +23,9 @@ public class TemplateGroupDesc {
     // 模板组描述
     private String desc;
 
-    // 模板组路径
+    // 顺序号
     @JsonIgnore
-    private String path;
+    private Integer order;
 
     // 模板文件列表描述
     @JsonIgnore

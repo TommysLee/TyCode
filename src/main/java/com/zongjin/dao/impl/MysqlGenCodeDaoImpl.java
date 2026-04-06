@@ -1,5 +1,6 @@
 package com.zongjin.dao.impl;
 
+import com.google.common.collect.Sets;
 import com.zongjin.constant.DBType;
 import com.zongjin.dao.GenCodeDao;
 import com.zongjin.entity.DataSourceDesc;
@@ -14,9 +15,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
-import static com.zongjin.constant.SQL.MYSQL_TABLE;
 import static com.zongjin.constant.SQL.MYSQL_COLUMN;
+import static com.zongjin.constant.SQL.MYSQL_COLUMN_FKey;
+import static com.zongjin.constant.SQL.MYSQL_TABLE;
 
 /**
  * 获取 MySQL 表结构的实现
@@ -50,6 +53,14 @@ public class MysqlGenCodeDaoImpl implements GenCodeDao {
             requirement.setTabComment(rs.getString(2));
         }
 
+        // 获取表外键字段
+        Set<String> fkColumnSet = Sets.newHashSet();
+        ps = conn.prepareStatement(MYSQL_COLUMN_FKey.replace("{0}", dbName).replace("{1}", requirement.getTabName()));
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            fkColumnSet.add(rs.getString(1));
+        }
+
         // 获取表字段定义
         ps = conn.prepareStatement(MYSQL_COLUMN.replace("{0}", dbName).replace(
                 "{1}", requirement.getTabName()));
@@ -65,6 +76,11 @@ public class MysqlGenCodeDaoImpl implements GenCodeDao {
             m.setScale(rs.getInt(i++));
             m.setDefaultValue(rs.getString(i++));
             m.setHasDefault(StringUtils.isNotBlank(m.getDefaultValue()) ? true : false);
+
+            // 标记外键字段
+            if (fkColumnSet.contains(m.getColumnName())) {
+                m.setIsFKey(true);
+            }
 
             // 校准类型长度
             int factLen = TypeResolveUtil.length(rs.getString(i++));

@@ -2,17 +2,17 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
   <!--/* 共用JS与CSS */-->
-  <th:block th:replace="assets/include :: scriptcss('[[${base.tabComment ?: ''}]]管理')"/>
+  <th:block th:replace="~{assets/include :: scriptcss('[[${base.tabComment ?: ''}]]管理')}"/>
 </head>
 <body>
   <v-app id="app" v-cloak>
     <!-- 顶部功能区 -->
     <v-app-bar app flat :color="$vuetify.theme.dark? null : 'white'">
-      <th:block th:replace="assets/include :: header"/>
+      <th:block th:replace="~{assets/include :: header}"/>
     </v-app-bar>
 
     <!-- 左侧区域::导航菜单 -->
-    <th:block th:replace="assets/include :: navMenu"/>
+    <th:block th:replace="~{assets/include :: navMenu}"/>
 
     <!-- 主体部分 -->
     <v-main>
@@ -26,8 +26,8 @@
                 <v-text-field hide-details outlined dense clearable label="名称" v-model="param.name"></v-text-field>
               </v-col>
               <v-col class="text-right">
-                <v-btn depressed large color="primary mr-1" @click="doQuery">查询</v-btn>
-                <v-btn depressed large outlined text @click="resetQueryForm">重置</v-btn>
+                <v-btn depressed large color="primary mr-1" @click="doQuery(1)">查询</v-btn>
+                <v-btn depressed large outlined text @click="resetQueryForm(1)">重置</v-btn>
               </v-col>
             </v-row>
           </v-form>
@@ -49,19 +49,19 @@
                   :items="datatable.items"
                   item-key="[[${base.pkProperty ?: ''}]]"
                   hide-default-footer
-                  disable-sort="true"
-                  disable-pagination="true"
+                  disable-sort
+                  disable-pagination
                   fixed-header
-                  :no-data-text="noDataText"
-                  :loading-text="dataLoadingText"
                   :loading="loading"
               >
                 <template v-slot:item.operation="{item}">
                   <a class="mr-2" @click="openFormDialog('修改[[${base.tabComment ?: ''}]]', item.[[${base.pkProperty ?: ''}]])" shiro:hasPermission="/[[${base.moduleName}]]/[[${base.instanceName ?: ''}]]/update">修改</a>
                   <v-btn-confirm :data="item.[[${base.pkProperty ?: ''}]]" @confirm="doDelete" shiro:hasPermission="/[[${base.moduleName}]]/[[${base.instanceName ?: ''}]]/del"></v-btn-confirm>
                 </template>
+                <template #footer>
+                  <v-pagination class="pagebar mt-2" :disabled="loading" v-model="pagination.page" :length="pagination.totalPages" :total-visible="pagination.vp" @input="doQuery" v-show="pagination.totalPages > 0"/>
+                </template>
               </v-data-table>
-              <v-pagination class="pagebar mt-2" :disabled="loading" v-model="pagination.page" :length="pagination.totalPages" :total-visible="pagination.vp" @input="doQuery" v-show="pagination.totalPages > 0"/>
             </v-col>
           </v-row>
         </v-card>
@@ -81,10 +81,10 @@
                 <v-card-text>
                   <!-- 数据表单 -->[#th:block th:each="item : ${mappings}" th:object="${item}" th:unless="${#strings.contains('createUser, createTime, updateUser, updateTime',item.javaName) || item.isKey}"][#th:block th:if="*{'remark' == javaName}"]
                   <validation-provider v-slot="{ errors }" name="备注" rules="max:200">
-                    <v-textarea outlined dense clearable :error-messages="errors" v-model.trimx="formData.remark" label="备注"></v-textarea>
+                    <v-textarea outlined dense clearable :error-messages="errors" v-blank v-model.trim="formData.remark" label="备注"></v-textarea>
                   </validation-provider>[/th:block][#th:block th:if="*{'remark' != javaName}"]
                   <validation-provider v-slot="{ errors }" name="[[*{columnComment ?: ''}]]" rules="required|max:[[*{#strings.contains('Integer, Long, Double, Float', javaType)? 10 : 30}]]">
-                    <v-text-field outlined dense clearable type="[[*{#strings.contains('Integer, Long, Double, Float', javaType)? 'number' : 'text'}]]" :error-messages="errors" v-model.trimx="formData.[[*{javaName}]]" label="[[*{columnComment ?: ''}]]"></v-text-field>
+                    <v-text-field outlined dense clearable type="[[*{#strings.contains('Integer, Long, Double, Float', javaType)? 'number' : 'text'}]]" :error-messages="errors"[[*{#strings.contains('Integer, Long, Double, Float', javaType)? '' : ' v-blank'}]] v-model.trim="formData.[[*{javaName}]]" label="[[*{columnComment ?: ''}]]"></v-text-field>
                   </validation-provider>[/th:block][/th:block]
                 </v-card-text>
                 <v-card-actions class="justify-end">
@@ -99,7 +99,7 @@
   </v-app>
 
   <!-- 导入Vuetify扩展组件 -->
-  <th:block th:replace="assets/vuetify :: v-btn-confirm"/>
+  <th:block th:replace="~{assets/vuetify :: v-btn-confirm}"/>
 
   <!-- 业务js -->
   <script type="text/javascript" th:src="@{/js/[[${base.moduleName}]]/[[${base.instanceName ?: ''}]]/[[${base.instanceName ?: ''}]].js?_t=#buildtime#}"></script>

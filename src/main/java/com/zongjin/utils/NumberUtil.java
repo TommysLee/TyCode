@@ -71,7 +71,7 @@ public final class NumberUtil {
 	 */
 	public static String fillZero(Integer number, int digit) {
 
-		return fillZero(new Long(number), digit);
+		return fillZero(number.longValue(), digit);
 	}
 
 	/**
@@ -85,6 +85,6 @@ public final class NumberUtil {
 	 */
 	public static String fillZero(String numberStr, int digit) {
 
-		return fillZero(new Long(numberStr), digit);
+		return fillZero(Long.parseLong(numberStr), digit);
 	}
 }

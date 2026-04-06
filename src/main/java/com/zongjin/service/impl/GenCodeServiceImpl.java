@@ -55,10 +55,11 @@ public class GenCodeServiceImpl implements GenCodeService {
     public List<Mapping> getMappingData(Requirement requirement) throws Exception {
 
         final GenCodeDao genCodeDao = DBAdapter.getDao();
-        List<Mapping> mappingList = new ArrayList<Mapping>();
+        List<Mapping> mappingList = new ArrayList<>();
         if (StringUtils.isNotBlank(requirement.getTabName())) {
             requirement.setClazzName(StringUtil.getNamingClass(requirement.getTabName(), utils.getTabNamePrefix()));
             requirement.setInstanceName(StringUtil.getFirstLowerText(requirement.getClazzName()));
+            requirement.setPageName(StringUtil.getPageName(requirement.getTabName(), utils.getTabNamePrefix()));
             mappingList = genCodeDao.getTableDefinition(requirement, dataSourceDescService.getById(requirement.getDatasource()));
             for (Mapping m : mappingList) {
                 m.setJavaName(StringUtil.getNamingProperty(m.getColumnName()));
@@ -86,7 +87,6 @@ public class GenCodeServiceImpl implements GenCodeService {
      * @throws Exception
      */
     public List<Result> generateSources(final Requirement requirement, List<Mapping> mappings) throws Exception {
-
         final List<Result> resultList = Lists.newArrayList();
 
         // 模板数据
@@ -97,7 +97,7 @@ public class GenCodeServiceImpl implements GenCodeService {
 
         // 获取选定的各组件模板
         final TemplateGroupDesc templateGroupDesc = templateGroupDescService.getById(requirement.getTemplateGroup());
-        if (null != templateGroupDesc && mappings.size() > 0) {
+        if (null != templateGroupDesc && !mappings.isEmpty()) {
             final List<TemplateFileDesc> templateFileDescs = templateGroupDesc.getFileDescList();
 
             // 循环生成各组件源代码

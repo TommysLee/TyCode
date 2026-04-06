@@ -43,6 +43,14 @@
       <v-btn icon @click="toggleFullScreen">
         <v-icon>{{fullscreenIcon}}</v-icon>
       </v-btn>
+      <v-tooltip bottom>
+        <template v-slot:activator="{on, attrs}">
+          <v-btn icon v-bind="attrs" v-on="on" target="_blank" href="printsys">
+            <v-icon>mdi-comment-question-outline</v-icon>
+          </v-btn>
+        </template>
+        <span v-text="$t('打印系统信息')"></span>
+      </v-tooltip>
     </v-app-bar>
   </body>
 </html>

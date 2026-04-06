@@ -2,14 +2,19 @@ package com.zongjin.utils;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.filefilter.DirectoryFileFilter;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import java.io.File;
 import java.io.FileFilter;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * 文件工具类
@@ -17,6 +22,7 @@ import java.util.Map;
  * @Author Tommy
  * @Date 2021/12/7
  */
+@Slf4j
 public class FileUtil {
 
     /**
@@ -58,6 +64,42 @@ public class FileUtil {
     }
 
     /**
+     * 获取匹配搜索模式的文件流
+     *
+     * @param pattern 搜索模式
+     * @return Map<String, InputStream>
+     */
+    public static Map<String, InputStream> getInputstreamByPattern(String pattern) {
+        Map<String, InputStream> streamMap = Maps.newHashMap();
+        if (StringUtils.isNotBlank(pattern)) {
+            try {
+                // 1. 创建解析器
+                PathMatchingResourcePatternResolver patternResolver = new PathMatchingResourcePatternResolver();
+
+                // 2. 获取所有匹配的资源
+                Resource[] resources = patternResolver.getResources(pattern);
+                log.info("搜索到资源数：" + resources.length);
+
+                // 3. 处理资源
+                for (Resource resource : resources) {
+                    System.out.println(resource.getURL());
+                    System.out.print("exists：" + resource.exists() +"\t");
+                    System.out.print("isReadable：" + resource.isReadable() +"\t");
+                    System.out.println("isFile：" + resource.isFile());
+
+                    if (resource.exists() && resource.isReadable()) {
+                        String dirName = getParentPathName(resource.getURL().getPath());
+                        streamMap.put(dirName, resource.getInputStream());
+                    }
+                }
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+            }
+        }
+        return streamMap;
+    }
+
+    /**
      * 获取文件流
      *
      * @param relativePath 相对于Root的路径
@@ -92,5 +134,19 @@ public class FileUtil {
      */
     public static String getRoot() {
         return Thread.currentThread().getContextClassLoader().getResource(StringUtils.EMPTY).getPath();
+    }
+
+    /**
+     * 获取指定路径的父路径名称
+     *
+     * @param path 路径
+     * @return String
+     */
+    public static String getParentPathName(String path) {
+        String parentPath = FilenameUtils.getPathNoEndSeparator(path);
+        if (Objects.nonNull(parentPath)) {
+            return FilenameUtils.getName(parentPath);
+        }
+        return null;
     }
 }

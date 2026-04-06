@@ -1,0 +1,18 @@
+{
+  "resources": {
+    "includes": [
+      {
+        "pattern": "repository/.*"
+      },
+      {
+        "pattern": "i18n/.*\\.properties$"
+      }
+    ],
+    "bundles": [
+      {
+        "name": "i18n/language",
+        "locales": ["", "en_US", "ja_JP"]
+      }
+    ]
+  }
+}

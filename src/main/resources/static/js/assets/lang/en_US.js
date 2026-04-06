@@ -1,6 +1,7 @@
 const lang_en_US_locale = {
     "清除缓存": "Clear Cache",
     "清除缓存成功": "Clearing cache succeeded",
+    "打印系统信息": "Print system information",
     "数据源": "DataSource",
     "基础信息": 'Base Information',
     "数据库表名": "Database Table Name",
@@ -14,4 +15,4 @@ const lang_en_US_locale = {
     "IE浏览器不支持复制功能": 'IE browser does not support copy function',
     "点击复制源码": 'Click to copy source code'
 };
-i18n && i18n.setLocaleMessage("en_US", lang_en_US_locale);
+i18n && i18n.setLocaleMessage("en-US", lang_en_US_locale);

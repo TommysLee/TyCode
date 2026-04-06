@@ -30,6 +30,9 @@ public class Requirement {
     // 类主键属性
     private String pkProperty;
 
+    // 页面名称
+    private String pageName;
+
     // DB表名
     private String tabName;
 

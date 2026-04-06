@@ -1,6 +1,6 @@
-name: "i18N标准化模板"
+name: "Vue3 i18N标准化模板"
 desc: "包含：页面、JS、Controller、业务逻辑层、数据访问层等组件模板。"
-order: 4
+order: 2
 fileDescList:
   -
     name: "entity.th"

@@ -34,8 +34,7 @@ public class DataSourceDescServiceImpl implements IDataSourceDescService {
      */
     @Override
     public List<DataSourceDesc> getList() {
-
-        if (dsDescMap.size() < 1) {
+        if (dsDescMap.isEmpty()) {
             Yaml yaml = new Yaml();
             Map<String, Object> dsMap = yaml.load(FileUtil.getFileInputStream(JDBC_FILE_PATH)); // 读取YML文件
             for (Map.Entry<String, Object> entry : dsMap.entrySet()) { // 将YML文本转换为实体类对象
@@ -60,8 +59,7 @@ public class DataSourceDescServiceImpl implements IDataSourceDescService {
      */
     @Override
     public DataSourceDesc getById(String id) {
-
-        if (dsDescMap.size() < 1) {
+        if (dsDescMap.isEmpty()) {
             getList();
         }
         return dsDescMap.get(id);

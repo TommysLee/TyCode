@@ -41,6 +41,9 @@ public class Mapping {
     // 是否为主键
     private Boolean isKey;
 
+    // 是否为外键
+    private Boolean isFKey = false;
+
     // 是否有默认值
     private Boolean hasDefault;
 

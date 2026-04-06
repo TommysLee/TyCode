@@ -63,6 +63,21 @@ public final class StringUtil {
     }
 
     /**
+     * 获取符合前端页面风格的文本
+     *
+     * @param str
+     * @param tabNamePrefix
+     * @return String
+     */
+    public static String getPageName(String str, String tabNamePrefix) {
+        String text = getText(str).toLowerCase().replaceFirst("(" + tabNamePrefix + ")+", StringUtils.EMPTY);
+        if (!text.isEmpty() && !text.matches("_+")) {
+            text = text.replace("_", "-");
+        }
+        return text;
+    }
+
+    /**
      * 获取首字母大写的文本
      *
      * @param str

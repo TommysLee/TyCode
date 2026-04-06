@@ -1,6 +1,7 @@
 const lang_ja_JP_locale = {
     "清除缓存": "キャッシュを消去する",
     "清除缓存成功": "キャッシュ消去成功",
+    "打印系统信息": "システム情報を印刷する",
     "数据源":"データベース",
     "基础信息": '基礎情報',
     "数据库表名": "表の名称",
@@ -13,4 +14,4 @@ const lang_ja_JP_locale = {
     "IE浏览器不支持复制功能": 'IE ブラウザはコピー機能に対応していない',
     "点击复制源码": 'コピーソースをクリックする'
 };
-i18n && i18n.setLocaleMessage("ja_JP", lang_ja_JP_locale);
+i18n && i18n.setLocaleMessage("ja-JP", lang_ja_JP_locale);

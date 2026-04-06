@@ -18,7 +18,7 @@
 
     <!-- 查询记录数 -->
     <select id="find[[${base.clazzName ?: ''}]]Count" parameterType="[[${base.clazzName ?: ''}]]" resultType="java.lang.Integer">
-        SELECT count(*) FROM [[${base.tabName ?: ''}]] t
+        SELECT count(0) FROM [[${base.tabName ?: ''}]] t
         <include refid="condition_[[${base.instanceName ?: ''}]]" />
     </select>
 

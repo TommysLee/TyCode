@@ -1,4 +1,4 @@
-<!-- VUE初始化 -->
+// VUE初始化
 let app = new Vue({
     el: "#app",
     mixins,

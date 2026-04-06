@@ -4,13 +4,12 @@ import com.zongjin.adapter.DBAdapter;
 import com.zongjin.entity.DataSourceDesc;
 import com.zongjin.service.IDataSourceDescService;
 import com.zongjin.utils.DBHelper;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * 自动选取合适的数据库DAO实现

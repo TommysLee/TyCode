@@ -1,5 +1,6 @@
 package com.zongjin.spring;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -7,8 +8,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.LocaleResolver;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * Spring容器工具类，方便在非spring管理环境中获取bean
