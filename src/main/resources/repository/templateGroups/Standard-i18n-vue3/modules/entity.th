@@ -2,6 +2,8 @@ package [[${base.pkgName ?: ''}]];
 
 import com.ty.api.model.BaseBO;
 import lombok.Data;
+
+import java.io.Serial;
 [#th:block th:each="item : ${base.packageSet}"]
 import [[${item}]];
 [/th:block]
