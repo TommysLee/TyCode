@@ -1,42 +1,23 @@
-# tycode
+<p align="center">
+    <img alt="TyFast LOGO" width="130" src="https://raw.githubusercontent.com/TommysLee/TyFast/refs/heads/master/tyfast-web/src/main/resources/public/images/logo/ty-greeen.png">    
+</p>
+<h1 align="center" style="font-weight: bold;">TyCode 代码生成器</h1>
+<h4 align="center">Write once, Generate more. —— 一次模板，无限生成</h4>
+<p align="center">
+    <img alt="Build Passing" src="https://img.shields.io/badge/build-passing-brightgreen.svg">
+    <img alt="TyFast-3.x" src="https://img.shields.io/badge/TyCode-v2.x-brightgreen.svg?logo=github">
+    <img alt="Apache License" src="https://img.shields.io/badge/license-apache-brightgreen.svg">
+</p>
+一款简单而强大、灵活通用的代码生成工具。无论是 Java、Vue、SQL，还是 Python、Go，只要你会写 Thymeleaf 模板，TyCode 就能帮你把重复的工作量降到零。
 
-#### 重要提示
+### 目前支持的数据库
 
-> **TyCode** 现已支持 Spring Native，即可通过 GraalVM Native-Image 编译为本地原生二进制应用，无需JVM。
+- MySQL
+- Oracle
+- SQLServer
+- （可扩展其他数据库）
 
-- **正常打包**
-
-```sh
-mvn clean package
-```
-
-- **Native原生应用打包**
-
-```sh
-mvn clean -Pnative native:compile
-```
-
-#### 介绍
-
-Write once, Generate more，So stupid.
-
-一款简单而强大、灵活的代码生成器Cloud工具。
-
-与传统代码生成器有着很大区别，它可以生成任何编程语言的任意代码。如：生成一个模块完整的CRUD代码，从前端到后端，大幅提高开发人员的生产力。
-
-使用起来也非常简单！点点按钮，几天的工作量，在弹指一挥间就完成了。
-
-技术选型：SpringBoot + JDBC + Vue + Vuetify。
-
-目前支持的数据库有：MySQL、Oracle、SQLServer等。
-
-系统支持热加载，即修改了数据源和模板后，不需要重启哦！
-
-该工具在集团内使用多年，为了自身不断优化、发扬开源贡献精神，于2022年完全开源。
-
-支持i18N国际化。
-
-#### 产品界面
+### 系统界面
 
 ![](https://github.com/TommysLee/images-bed/blob/main/ty-code/code-index-zh.png?raw=true)
 
@@ -44,43 +25,70 @@ Write once, Generate more，So stupid.
 
 ![](https://github.com/TommysLee/images-bed/blob/main/ty-code/code-result-zh-2.png?raw=true)
 
-#### 使用前置条件
+### 快速上手
 
-> 划重点：代码模板是基于Thyemleaf编写的，所以你**只要会一点点Thymeleaf基础就可以啦**！So Easy！！！
+#### 前置条件
 
-项目中内置了一套标准模板，此模板完全适用于 **[TyFast](https://github.com/TommysLee/TyFast)** 平台。
+> **你只需要会一点点 Thymeleaf 基础**，就能写 TyCode 模板。
 
-因每个团队的项目架构搭建方式不尽相同，大家可以根据标准模板改成符合自己编码规范的样子。
+项目内置了一套标准模板，完全适用于 **[TyFast](https://github.com/TommysLee/TyFast)** 平台。如果你是其他项目架构，也可以参考内置模板，改成符合自己规范的样子。
 
-#### 如何编写代码模板
+#### 模板与数据源
 
-所有的模板和数据源都存放在项目的 **src / main / resources / repository** 目录中，如下图所示：
+所有模板和数据源都存放在：`src/main/resources/repository/`，如下图所示：
 
 ![](https://github.com/TommysLee/images-bed/blob/main/ty-code/repos.png?raw=true)
 
-repository 各目录和文件的说明：
+- `jdbc.yml`：数据源配置文件，支持配置多个数据源；
+- `templateGroups`：存放模板组的目录，一个模板组即一个目录；
+- `modules`、`readme.yml`：每个模板组都必须包含这两个部分；
 
-- jdbc.yml：是数据源配置文件，支持配置多个数据源；
-- templateGroups：是存放模板组的目录，一个模板组即一个目录；
-- modules、readme.yml：每个模板组都必须包含这两个部分，系统会按此规则进行读取；
+**模板中可用的动态数据，只需要关心两个类：**
 
-**模板中用到的动态数据，大家只需要关心如下两个类即可：**
+- `Requirement.java`
+- `Mapping.java`
 
-1. Requirement.java
-2. Mapping.java
+#### 生成代码与复制
 
-> 无论是数据源的修改，还是模板的修改，都不需要重启TyCode，因为TyCode**支持热加载**，只要在页面点一下清除缓存即可。
-
-![](https://github.com/TommysLee/images-bed/blob/main/ty-code/clear.png?raw=true)
-
-#### 如何复制源码
-
-只需要单击标题，即可复制当前显示的源码到剪切板；
-
-所以大家 做的更多的事情就是：Ctrl + C 和 Ctrl +V
+在 TyCode 界面中，单击标题即可复制当前显示的源码到剪贴板。你只需要 **Ctrl+C / Ctrl+V**，把代码粘贴到你的项目中即可。
 
 ![](https://github.com/TommysLee/images-bed/blob/main/ty-code/copy.png?raw=true)
 
-#### 最后
+### 支持热加载
 
-欢迎大家踊跃留言，共同推进TyCode成长，让码砖成为过去式，让我们的精力专注于业务开发。
+- 修改数据源配置？不需要重启。
+- 修改模板？也不需要重启。
+- 页面上点一下“清除缓存”，立刻生效。
+
+![](https://github.com/TommysLee/images-bed/blob/main/ty-code/clear.png?raw=true)
+
+### 支持 Native 原生编译
+
+TyCode 已支持 GraalVM Native-Image，可以编译成独立的二进制可执行文件，无需 JVM，毫秒级启动。
+
+```shell
+# 正常打包
+mvn clean package
+
+# 编译为原生应用
+mvn clean -Pnative native:compile
+```
+
+### 适用人群
+
+- 受够重复 CRUD 的开发者
+- 想在团队内统一代码规范的技术负责人
+- 希望用 Vue 但不想被前端工程化绊住的团队
+- 任何想“写一次模板，无限生成代码”的务实开发者
+
+> **让团队定义好自己的代码模板，然后一键生成。** 生成的代码完全符合你们的规范，零偏差、零歧义、零额外成本。
+
+### 最后
+
+TyCode 在集团内部已使用多年，于 2022 年完全开源。我们希望它能帮助更多团队：
+
+- **让码砖成为过去式**
+- **让精力专注于业务开发**
+- **让技术回归“解决真实问题”的本质**
+
+欢迎大家踊跃留言，共同推进 TyCode 成长！
