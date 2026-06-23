@@ -117,7 +117,7 @@ jobs:
           $exe_base = $exe_orig.BaseName
           $exe_new_name = "${exe_base}_x64_windows.exe"
           Rename-Item -Path $exe_orig.FullName -NewName $exe_new_name
-          $exe_new = Get-ChildItem -Path $exe_orig.Directory -Filter $exe_new_name | Select-Object -First 
+          $exe_new = Get-ChildItem -Path $exe_orig.Directory -Filter $exe_new_name | Select-Object -First 1
           
           if (-not $exe_new) {
             Write-Error "Renamed file not found"
@@ -125,6 +125,7 @@ jobs:
           }
           $exe_path = $exe_new.FullName -replace '\\', '/'
           echo "exe_file=$exe_path" >> $env:GITHUB_OUTPUT
+          Write-Host "exe_file path: $exe_path"
 
       - name: Upload Windows .exe to Release
         if: github.event_name == 'release'
