@@ -9,6 +9,7 @@ on:
   workflow_dispatch:     # 允许在 Actions 页面手动触发（用于调试）
 
 jobs:
+  # ---------- War 构建 ----------
   build-and-upload:
     runs-on: ubuntu-latest
     permissions:
@@ -21,10 +22,10 @@ jobs:
 
       # 2. 设置 JDK
       - name: Set up JDK 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           java-version: '17'
-          distribution: 'temurin'
+          distribution: 'zulu'
           cache: maven   # 自动缓存 Maven 依赖
 
       # 3. Maven 构建打包（如需运行测试请删除 -DskipTests）
@@ -36,7 +37,91 @@ jobs:
         if: github.event_name == 'release'
         uses: softprops/action-gh-release@v3
         with:
+          files: target/tycode.war
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # ---------- Linux Native 构建 ----------
+  build-linux-native:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up GraalVM JDK
+        uses: actions/setup-java@v5
+        with:
+          java-version: '17'
+          distribution: 'graalvm'
+          cache: maven
+
+      - name: Install native-image
+        run: gu install native-image
+
+      - name: Build Native Image and JAR (Linux)
+        run: mvn clean -Pnative native:compile
+
+      - name: Rename Linux binary with _x64_linux suffix
+        id: artifacts
+        run: |
+          # JAR 保持原名，不重命名
+          JAR_FILE=$(find target -maxdepth 1 -name "*.jar" | head -1)
+          # 可执行文件（无后缀）重命名为 _x64_linux
+          EXE_ORIG=$(find target -maxdepth 1 -type f -executable ! -name "*.jar" | head -1)
+          EXE_BASE=$(basename "$EXE_ORIG")
+          EXE_NEW="target/${EXE_BASE}_x64_linux"
+          mv "$EXE_ORIG" "$EXE_NEW"
+          echo "jar_file=$JAR_FILE" >> $GITHUB_OUTPUT
+          echo "exe_file=$EXE_NEW" >> $GITHUB_OUTPUT
+          
+      - name: Upload Linux artifacts to Release
+        if: github.event_name == 'release'
+        uses: softprops/action-gh-release@v3
+        with:
           files: |
-            target/tycode.war
+            ${{ steps.artifacts.outputs.jar_file }}
+            ${{ steps.artifacts.outputs.exe_file }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # ---------- Windows Native 构建 ----------
+  build-Windows-native:
+    runs-on: windows-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up GraalVM JDK
+        uses: actions/setup-java@v5
+        with:
+          java-version: '17'
+          distribution: 'graalvm'
+          cache: maven
+
+      - name: Install native-image
+        run: gu install native-image
+
+      - name: Build Native Image (Windows)
+        run: mvn clean -Pnative native:compile
+
+      - name: Rename Windows .exe with _x64_windows suffix
+        id: artifacts
+        shell: pwsh
+        run: |
+          $exe_orig = Get-ChildItem -Path target -Filter "*.exe" | Select-Object -First 1
+          $exe_base = $exe_orig.BaseName
+          $exe_new = "target/${exe_base}_x64_windows.exe"
+          Rename-Item -Path $exe_orig.FullName -NewName $exe_new
+          echo "exe_file=$exe_new" >> $env:GITHUB_OUTPUT
+
+      - name: Upload Windows .exe to Release
+        if: github.event_name == 'release'
+        uses: softprops/action-gh-release@v3
+        with:
+          files: ${{ steps.artifacts.outputs.exe_file }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
