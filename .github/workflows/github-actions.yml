@@ -57,9 +57,6 @@ jobs:
           distribution: 'graalvm'
           cache: maven
 
-      - name: Install native-image
-        run: gu install native-image
-
       - name: Build Native Image and JAR (Linux)
         run: mvn clean -Pnative native:compile
 
@@ -101,9 +98,6 @@ jobs:
           java-version: '21'
           distribution: 'graalvm'
           cache: maven
-
-      - name: Install native-image
-        run: gu install native-image
 
       - name: Build Native Image (Windows)
         run: mvn clean -Pnative native:compile
