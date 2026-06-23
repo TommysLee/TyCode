@@ -1,5 +1,6 @@
 # This workflow will build a package using Maven and then publish it to GitHub packages when a release is created
 # For more information see: https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#apache-maven-with-a-settings-path
+# https://github.com/graalvm/setup-graalvm
 # https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax
 
 name: Spring Boot Maven Package
@@ -52,10 +53,10 @@ jobs:
         uses: actions/checkout@v7
 
       - name: Set up GraalVM JDK
-        uses: actions/setup-java@v5
+        uses: graalvm/setup-graalvm@v1
         with:
           java-version: '21'
-          distribution: 'graalvm'
+          distribution: 'liberica'
           cache: maven
 
       - name: Build Native Image and JAR (Linux)
@@ -94,10 +95,10 @@ jobs:
         uses: actions/checkout@v7
 
       - name: Set up GraalVM JDK
-        uses: actions/setup-java@v5
+        uses: graalvm/setup-graalvm@v1
         with:
           java-version: '21'
-          distribution: 'graalvm'
+          distribution: 'liberica'
           cache: maven
 
       - name: Setup MSVC development environment (x64) # 加载 Visual Studio 2022 的 x64 开发环境
@@ -114,9 +115,10 @@ jobs:
         run: |
           $exe_orig = Get-ChildItem -Path target -Filter "*.exe" | Select-Object -First 1
           $exe_base = $exe_orig.BaseName
-          $exe_new = "target/${exe_base}_x64_windows.exe"
+          $exe_new = "${exe_base}_x64_windows.exe"
           Rename-Item -Path $exe_orig.FullName -NewName $exe_new
-          echo "exe_file=$exe_new" >> $env:GITHUB_OUTPUT
+          $exe_new_path = Join-Path $exe_orig.Directory $exe_new_name
+          echo "exe_file=$exe_new_path" >> $env:GITHUB_OUTPUT
 
       - name: Upload Windows .exe to Release
         if: github.event_name == 'release'
