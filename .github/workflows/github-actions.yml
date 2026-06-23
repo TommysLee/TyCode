@@ -1,5 +1,6 @@
 # This workflow will build a package using Maven and then publish it to GitHub packages when a release is created
 # For more information see: https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#apache-maven-with-a-settings-path
+# https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax
 
 name: Spring Boot Maven Package
 
@@ -98,6 +99,11 @@ jobs:
           java-version: '21'
           distribution: 'graalvm'
           cache: maven
+
+      - name: Setup MSVC development environment (x64) # 加载 Visual Studio 2022 的 x64 开发环境
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
 
       - name: Build Native Image (Windows)
         run: mvn clean -Pnative native:compile
